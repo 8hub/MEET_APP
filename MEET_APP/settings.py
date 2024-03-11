@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "MeetApp",
     "SongRequests",
     "UsersApp",
+    "functional_tests",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",

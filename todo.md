@@ -1,6 +1,9 @@
 #### GLOBALY
 - [ ] Add functional tests
 - [ ] Add unit tests
+  - [ ] UserApp
+  - [ ] MeetApp
+  - [ ] SongRequests
 
 ---
 #### UserApp app
