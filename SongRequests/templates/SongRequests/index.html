@@ -1,0 +1,19 @@
+{% extends "SongRequests/layout.html" %}
+{% block title%}
+Song requests
+{% endblock title %}
+
+
+{% block body %}
+<p>Here are the playlists:</p>
+{% for playlist in playlists %}
+    {% if playlist.is_anonymous %}
+        <li> {{ playlist.title }}</li>
+    {% else %}
+        <li> {{ playlist.title }} by {{ playlist.user }}</li>
+    {% endif %}
+{% empty %}
+    <li> No playlists yet </li>
+{%endfor%}
+<a href="{% url 'SongRequests:add_song' %}">Add a song</a>
+{% endblock body %}

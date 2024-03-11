@@ -1,0 +1,12 @@
+{% extends "SongRequests.html" %}
+
+{% block <title> %}
+    Add playlist
+{% endblock <title> %}
+
+{% block body %}
+<h1>Add playlist</h1>
+<form action="{% url 'SongRequests:add_playlist' %}">
+
+</form>
+{% endblock body %}

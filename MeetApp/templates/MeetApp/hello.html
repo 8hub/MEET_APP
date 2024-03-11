@@ -1,0 +1,12 @@
+{% extends "main_layout.html" %}
+
+{% block title %}MeetApp{% endblock %}
+
+
+{%block body%}
+    <h1>MeetApp</h1>
+    <p>MeetApp is a web application that allows users to create and join events.
+    {% for welcome in hello %}
+    <li>{{welcome}}</li>
+    {% endfor %}
+{%endblock%}

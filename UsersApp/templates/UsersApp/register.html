@@ -1,0 +1,20 @@
+{% extends "UsersApp/users_layout.html" %}
+
+{% block users_body %}
+    <form action="{% url 'UsersApp:register' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Register">
+    </form>
+    {% if form.errors %}
+        <div class="errors">
+            <p>Please correct the following errors:</p>
+            {{ form.non_field_errors }}
+            {% for field in form %}
+                {% if field.errors %}
+                    {{ field.errors }}
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock users_body %}

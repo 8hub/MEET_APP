@@ -1,0 +1,11 @@
+{% extends "SongRequests/layout.html" %}
+{% block title %}Add song{% endblock title %}
+{% block body %}
+<h1>Add song</h1>
+<form action="{% url 'SongRequests:add_song' %}" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="song">
+</form>
+<a href="{% url 'SongRequests:index' %}">Back</a>
+{% endblock body %}
