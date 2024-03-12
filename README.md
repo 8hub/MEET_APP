@@ -10,6 +10,8 @@
   - [2.1. MeetApp](#21-meetapp)
   - [2.2. UsersApp](#22-usersapp)
   - [2.3. SongRequests](#23-songrequests)
+- [3. tests](#3-tests)
+  - [3.1. unit tests](#31-unit-tests)
 
 
 # 1. Introduction
@@ -65,4 +67,23 @@ class Playlist(models.Model):
   anonymous = models.BooleanField(default=False)
   user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="playlists")
 
+```
+
+# 3. tests
+
+## 3.1. unit tests
+To each app directory was added *test* folder in which are placed tests:
+- test_views.py
+- test_models.py
+- test_templates.py
+
+`from django.test import TestCase` is not supported by `unittest`, so `pytest-django` have to be installed to run tests in *VSCode Test Explorer*
+
+To enable running tests in VSCode to each test was added suffix:
+
+```python
+import os
+from django import setup
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "MEET_APP.settings")
+setup()
 ```

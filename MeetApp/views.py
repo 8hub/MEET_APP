@@ -3,6 +3,6 @@ from django.http import HttpResponse
 
 
 def index(request):
-    return render(request, "MeetApp/hello.html",{
+    return render(request, "MeetApp/index.html",{
         "hello": ["Hey", "Hi", "Hello"]
     })

@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from .models import Playlist, Song
-
+from django.contrib import messages
 
 class AddSongForm(forms.Form):
     title = forms.CharField(label="Song Title", min_length=3, max_length=64)
@@ -27,9 +27,8 @@ def add_song(request):
             url_field = form.cleaned_data["url_field"]
             song = Song(title=title, artist=artist, url_field=url_field)
             song.save()
-            return HttpResponseRedirect(reverse("SongRequests:index"), {
-                "info": "Song added successfully!"
-            })
+            messages.success(request, "Song added successfully")
+            return HttpResponseRedirect(reverse("SongRequests:index"))
         else:
             return render(request, "SongRequests/add_song.html",{
                 "form": form

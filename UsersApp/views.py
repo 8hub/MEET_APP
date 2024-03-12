@@ -18,7 +18,7 @@ def index(request):
         })
     
 def login_views(request):
-    redirect_to = request.POST.get('next') or request.GET.get("next", "/")
+    redirect_to = request.POST.get('next') or request.GET.get("next", "")
 
     if redirect_to == "/song_request/add_song":
         messages.info(request, "Your have to log in to add a song")
