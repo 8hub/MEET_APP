@@ -1,0 +1,11 @@
+{% extends "main_layout.html" %}
+{% block title %}Add meeting{% endblock title %}
+
+{% block body %}
+    <h1>Add meeting</h1>
+    <form action="{% url 'MeetApp:create_meeting' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p}}
+        <input type="submit" value="Create meeting">
+    </form>
+{% endblock body %}

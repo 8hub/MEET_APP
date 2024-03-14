@@ -9,4 +9,5 @@
     {% for welcome in hello %}
     <li>{{welcome}}</li>
     {% endfor %}
+    <a href="{% url 'MeetApp:create_meeting'%}">Create a meeting</a>
 {%endblock%}

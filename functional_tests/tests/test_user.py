@@ -35,5 +35,6 @@ class UserTest(LiveServerTestCase):
         self.browser.find_element(By.CSS_SELECTOR, "input[name='username']").send_keys("newuser")
         self.browser.find_element(By.CSS_SELECTOR, "input[name='email']").send_keys("newuser@email.com")
         self.browser.find_element(By.CSS_SELECTOR, "input[name='password']").send_keys("n3wPas5word")
+        self.browser.find_element(By.CSS_SELECTOR, "input[name='password_confirm']").send_keys("n3wPas5word")
         self.browser.find_element(By.CSS_SELECTOR, "input[type='submit']").click()
         self.assertIn("You are logged in", self.browser.page_source)

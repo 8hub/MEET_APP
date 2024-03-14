@@ -12,13 +12,13 @@
   - [2.3. SongRequests](#23-songrequests)
 - [3. tests](#3-tests)
   - [3.1. unit tests](#31-unit-tests)
-    - [MeetApp](#meetapp)
-    - [SongRequests](#songrequests)
-    - [UsersApp](#usersapp)
-  - [functional tests](#functional-tests)
-    - [test\_loading.py](#test_loadingpy)
-    - [test\_songrequests.py](#test_songrequestspy)
-    - [test\_user.py](#test_userpy)
+    - [3.1.1. MeetApp](#311-meetapp)
+    - [3.1.2. SongRequests](#312-songrequests)
+    - [3.1.3. UsersApp](#313-usersapp)
+  - [3.2. functional tests](#32-functional-tests)
+    - [3.2.1. test\_loading.py](#321-test_loadingpy)
+    - [3.2.2. test\_songrequests.py](#322-test_songrequestspy)
+    - [3.2.3. test\_user.py](#323-test_userpy)
 
 
 # 1. Introduction
@@ -106,30 +106,32 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "MEET_APP.settings")
 setup()
 ```
 
-### MeetApp
+### 3.1.1. MeetApp
 - test_views.py
   - redirection to `MeetApp:index`
   - status code of `MeetApp:index`
   - template used for `MeetApp:index`
-### SongRequests
+### 3.1.2. SongRequests
 - test_views.py
   - redirection to `SongRequests:index`
   - 
-### UsersApp
+### 3.1.3. UsersApp
 - test_views.py
-  - redirection to `
+  - test index view
+  - test login view
+  - test login view redirection after logging in
 
-## functional tests
-### test_loading.py
+## 3.2. functional tests
+### 3.2.1. test_loading.py
 - top bar loading
 - title and header
 
-### test_songrequests.py
+### 3.2.2. test_songrequests.py
 - login and add `Song`
 - login, add 5 `Song` and create `Playlist`
 - when not logged in `User` try to add a song he is redirected to `UsersApp` to log in and when he log in next redirection go to `SongRequests:add_song`
 
-### test_user.py
+### 3.2.3. test_user.py
 Test the functionality of UsersApp:
 - login `User`
 - logout `User`

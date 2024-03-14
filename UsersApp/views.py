@@ -51,6 +51,7 @@ def logout_views(request):
 def register(request):
     if request.method == "POST":
         form = NewUserForm(request.POST)
+        # validate all fields - important
         if form.is_valid():
             username = form.cleaned_data["username"]
             email = form.cleaned_data["email"]

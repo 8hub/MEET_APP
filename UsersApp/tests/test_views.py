@@ -26,3 +26,14 @@ class UsersAppViewTest(TestCase):
         response = self.client.post(reverse("UsersApp:login"), {"username": "testuser", "password": "testpassword"})
         self.assertEqual(response.status_code, 302)
         
+    def test_register_view_template(self):
+        response = self.client.get(reverse("UsersApp:register"))
+        self.assertTemplateUsed(response, "UsersApp/register.html")
+    
+    def test_register_view_redirect_status_code(self):
+        response = self.client.post(reverse("UsersApp:register"), {"username": "testuser","email": "test@email.com", "password": "testpassword", "password_confirm": "testpassword"})
+        self.assertEqual(response.status_code, 302)
+
+    def test_register_view_redirect_template(self):
+        response = self.client.post(reverse("UsersApp:register"), {"username": "testuser","email": "test@email.com", "password": "testpassword", "password_confirm": "testpassword"}, follow=True)
+        self.assertTemplateUsed(response, "UsersApp/index.html")

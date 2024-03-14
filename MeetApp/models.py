@@ -4,6 +4,7 @@ from django.forms import ValidationError
 
 
 class Meeting(models.Model):
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="created_meetings")
     name = models.CharField(max_length=64)
     description = models.TextField(blank=True, null=True)
     date = models.DateField()
@@ -48,10 +49,3 @@ class Meeting(models.Model):
     
     def clear_users(self):
         self.users.clear()
-
-    def is_valid(self):
-        try:
-            self.full_clean()
-            return True
-        except ValidationError:
-            return False
