@@ -1,8 +1,3 @@
-import os
-from django import setup
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "MEET_APP.settings")
-setup()
-
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from django.test import LiveServerTestCase

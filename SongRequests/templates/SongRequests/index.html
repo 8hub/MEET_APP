@@ -10,7 +10,7 @@ Song requests
     {% if playlist.is_anonymous %}
         <li> {{ playlist.title }}</li>
     {% else %}
-        <li> {{ playlist.title }} by {{ playlist.user }}</li>
+        <li> {{ playlist.title }} by {{ playlist.created_by }}</li>
     {% endif %}
 {% empty %}
     <li> No playlists yet </li>

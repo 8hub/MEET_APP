@@ -1,13 +1,9 @@
-import os
-from django import setup
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "MEET_APP.settings")
-setup()
-
 from django.http import HttpResponseRedirect
 from django.test import TestCase
 from django.urls import reverse
 from UsersApp.views import index
 from django.contrib.auth import get_user_model
+from test_utils import LoggedInBaseTest
 
 User = get_user_model()
 
@@ -30,5 +26,3 @@ class UsersAppViewTest(TestCase):
         response = self.client.post(reverse("UsersApp:login"), {"username": "testuser", "password": "testpassword"})
         self.assertEqual(response.status_code, 302)
         
-    def test_fail(self):
-        self.assertEqual(1+1, 3)

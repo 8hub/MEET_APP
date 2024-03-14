@@ -6,6 +6,8 @@ setup()
 import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
 from django.test import LiveServerTestCase
 from django.contrib.auth import get_user_model
 from django.urls import reverse
@@ -14,17 +16,18 @@ from SongRequests.models import Playlist
 User = get_user_model()
 
 class SongTest(LiveServerTestCase):
-
+    DEFAULT_WAIT = 3
+    
     def setUp(self):
         self.browser = webdriver.Firefox()
-        self.browser.implicitly_wait(5)  # Adjust based on your needs
+        self.browser.implicitly_wait(self.DEFAULT_WAIT)  # Adjust based on your needs
         self.user = User.objects.create_user(username="testuser", password="testpassword", email="user@email.com")
 
     def tearDown(self):
         self.browser.quit()
     
     def wait_for_element(self, element):
-        self.browser.implicitly_wait(5)
+        self.browser.implicitly_wait(self.DEFAULT_WAIT)
         self.browser.find_element(By.CSS_SELECTOR, element)
     
     def wait_3(self):
@@ -62,9 +65,23 @@ class SongTest(LiveServerTestCase):
 
         self.mark_song_to_add("1")
         self.mark_song_to_add("3")
-
         self.assertEqual(Playlist.objects.count(), 0)
         self.browser.find_element(By.CSS_SELECTOR, "input[type='submit']").click()
-        self.wait_3()
         self.assertEqual(Playlist.objects.count(), 1)
         self.assertIn("Playlist created successfully", self.browser.page_source)
+        self.assertIn("Test Playlist by testuser", self.browser.page_source)
+
+    def test_redirections_add_song(self):
+        self.browser.get(self.live_server_url + "/song_request/")
+        self.browser.find_element(By.LINK_TEXT, "Add a song").click()
+        WebDriverWait(self.browser, self.DEFAULT_WAIT).until(
+            EC.url_contains("/users/login/?next=/song_request/add_song")
+        )
+        self.assertIn("You have to log in to add a song", self.browser.page_source)
+
+        self.browser.find_element(By.CSS_SELECTOR, "input[type='text']").send_keys("testuser")
+        self.browser.find_element(By.CSS_SELECTOR, "input[type='password']").send_keys("testpassword")
+        self.browser.find_element(By.CSS_SELECTOR, "input[type='submit']").click()
+        WebDriverWait(self.browser, self.DEFAULT_WAIT).until(
+            EC.url_contains("/song_request/add_song")
+        )

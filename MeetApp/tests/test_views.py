@@ -1,15 +1,8 @@
-import os
-from django import setup
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "MEET_APP.settings")
-setup()
-
 from django.http import HttpResponseRedirect
 from django.test import TestCase
 from django.urls import reverse
 from MeetApp.views import index
 from django.contrib.auth import get_user_model
-
-User = get_user_model()
 
 class MeetAppViewTest(TestCase):
     def test_index_view(self):

@@ -12,6 +12,13 @@
   - [2.3. SongRequests](#23-songrequests)
 - [3. tests](#3-tests)
   - [3.1. unit tests](#31-unit-tests)
+    - [MeetApp](#meetapp)
+    - [SongRequests](#songrequests)
+    - [UsersApp](#usersapp)
+  - [functional tests](#functional-tests)
+    - [test\_loading.py](#test_loadingpy)
+    - [test\_songrequests.py](#test_songrequestspy)
+    - [test\_user.py](#test_userpy)
 
 
 # 1. Introduction
@@ -57,16 +64,27 @@ class User(AbstractUser):
 ```python
 class Song(models.Model):
   title = models.CharField(max_length=64)
-  artist = models.CharField(max_length=64, blank=True, null=True)
-  url_field = models.URLField(max_length=200, blank=True, null=True)
-  added_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name="songs")
+  artist = models.CharField(max_length=64,blank=True, null=True)
+  url_field = models.URLField(max_length=200,blank=True, null=True)
+  added_by = models.ForeignKey(settingsAUTH_USER_MODEL, on_delete=models.SET_NULL,null=True, related_name="songs")
+  add_date = models.DateTimeFiel(auto_now_add=True, blank=True, null=True)
 
 class Playlist(models.Model):
-  name = models.CharField(max_length=64)
-  songs = models.ManyToManyField(Song, blank=True, related_name="parent_playlists")
+  title = models.CharField(max_length=64, unique=True)
+  songs = models.ManyToManyField('Song',through='PlaylistSong', blank=True,related_name="parent_playlists")
   anonymous = models.BooleanField(default=False)
-  user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="playlists")
+  created_by = models.ForeignKey(settingsAUTH_USER_MODEL, on_delete=models.SET_NULL,null=True, blank=True, related_name="playlists")
+  add_date = models.DateTimeFiel(auto_now_add=True, blank=True, null=True)
+  last_modified = models.DateTimeFiel(auto_now=True)
 
+class PlaylistSong(models.Model):
+  '''
+  represents link from Song to Playlist with 'add_date' parameter
+  to track the date of  changes in playlist
+  '''
+  playlist = models.ForeignKey('Playlist',on_delete=models.CASCADE)
+  song = models.ForeignKey('Song',on_delete=models.CASCADE)
+  add_date = models.DateTimeFiel(auto_now_add=True)
 ```
 
 # 3. tests
@@ -87,3 +105,32 @@ from django import setup
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "MEET_APP.settings")
 setup()
 ```
+
+### MeetApp
+- test_views.py
+  - redirection to `MeetApp:index`
+  - status code of `MeetApp:index`
+  - template used for `MeetApp:index`
+### SongRequests
+- test_views.py
+  - redirection to `SongRequests:index`
+  - 
+### UsersApp
+- test_views.py
+  - redirection to `
+
+## functional tests
+### test_loading.py
+- top bar loading
+- title and header
+
+### test_songrequests.py
+- login and add `Song`
+- login, add 5 `Song` and create `Playlist`
+- when not logged in `User` try to add a song he is redirected to `UsersApp` to log in and when he log in next redirection go to `SongRequests:add_song`
+
+### test_user.py
+Test the functionality of UsersApp:
+- login `User`
+- logout `User`
+- register `User`
