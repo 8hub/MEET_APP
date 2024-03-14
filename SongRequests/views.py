@@ -68,25 +68,3 @@ def add_playlist(request):
     return render(request, "SongRequests/add_playlist.html",{
             "form":form
     })
-
-
-
-@login_required(login_url="../users/login")
-def add_song(request):
-    if request.method == "POST":
-        form = AddSongForm(request.POST)
-        if form.is_valid():
-            title = form.cleaned_data["title"]
-            artist = form.cleaned_data["artist"]
-            url_field = form.cleaned_data["url_field"]
-            song = Song(title=title, artist=artist, url_field=url_field)
-            song.save()
-            messages.success(request, "Song added successfully")
-            return HttpResponseRedirect(reverse("SongRequests:index"))
-        else:
-            return render(request, "SongRequests/add_song.html",{
-                "form": form
-            })
-    return render(request, "SongRequests/add_song.html",{
-        "form": AddSongForm()
-    })

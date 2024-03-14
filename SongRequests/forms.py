@@ -8,8 +8,8 @@ class AddSongForm(forms.Form):
 
 class AddPlaylistForm(forms.Form):
     title = forms.CharField(label="Playlist Title", min_length=3, max_length=64)
-    songs = forms.MultipleChoiceField(label="Songs", choices=[], required=False) 
-    anonymous = forms.BooleanField(label="Anonymous")
+    songs = forms.MultipleChoiceField(label="Songs", choices=[], required=False, widget=forms.CheckboxSelectMultiple) 
+    anonymous = forms.BooleanField(label="Anonymous", required=False, initial=False)
 
     def __init__(self, *args, **kwargs):
         super(AddPlaylistForm, self).__init__(*args, **kwargs)

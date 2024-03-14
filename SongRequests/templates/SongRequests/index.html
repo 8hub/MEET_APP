@@ -15,5 +15,7 @@ Song requests
 {% empty %}
     <li> No playlists yet </li>
 {%endfor%}
+
 <a href="{% url 'SongRequests:add_song' %}">Add a song</a>
+<a href="{% url 'SongRequests:add_playlist' %}">Add a playlist</a>
 {% endblock body %}

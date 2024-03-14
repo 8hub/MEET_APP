@@ -19,10 +19,10 @@ class Song(models.Model):
     
 
 class Playlist(models.Model):
-    title = models.CharField(min_length=3, max_length=64, unique=True)
+    title = models.CharField(max_length=64, unique=True)
     songs = models.ManyToManyField('Song', through='PlaylistSong', blank=True, related_name="parent_playlists")
     anonymous = models.BooleanField(default=False)
-    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, related_name="playlists")
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name="playlists")
     add_date = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     last_modified = models.DateTimeField(auto_now=True)
 
