@@ -4,12 +4,14 @@ from django.urls import reverse
 from MeetApp.forms import MeetingForm
 from MeetApp.models import Meeting
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 def index(request):
     return render(request, "MeetApp/index.html",{
         "hello": ["Hey", "Hi", "Hello"]
     })
 
+@login_required(login_url="../users/login")
 def create_meeting(request):
     form = MeetingForm(request.POST or None)
     if request.method == "POST" and form.is_valid():

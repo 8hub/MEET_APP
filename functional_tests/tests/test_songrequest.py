@@ -17,14 +17,20 @@ User = get_user_model()
 
 class SongTest(LiveServerTestCase):
     DEFAULT_WAIT = 3
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.browser = webdriver.Firefox()
+        cls.browser.implicitly_wait(cls.DEFAULT_WAIT)
     
     def setUp(self):
-        self.browser = webdriver.Firefox()
-        self.browser.implicitly_wait(self.DEFAULT_WAIT)  # Adjust based on your needs
         self.user = User.objects.create_user(username="testuser", password="testpassword", email="user@email.com")
-
-    def tearDown(self):
-        self.browser.quit()
+    
+    @classmethod
+    def tearDownClass(cls):
+        cls.browser.quit()
+        super().tearDownClass()
     
     def wait_for_element(self, element):
         self.browser.implicitly_wait(self.DEFAULT_WAIT)

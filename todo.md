@@ -1,49 +1,33 @@
 #### GLOBALY
 - [ ] Add functional tests
   - [ ] UserApp
-    - [ ] add user and add a song with this user
+  - [ ] MeetApp
+    - [x] Log in, add meeting
 - [ ] Add unit tests
   - [ ] UserApp
     - [ ] test_model
-      - [ ] add user
   - [ ] MeetApp
-    - [ ] add meeting
+    - [x] add meeting
+    - [ ] just login user can add meeting
   - [ ] SongRequests
 
 ---
 #### UserApp app
-- [x] Manage login
-- [x] Manage logout
-- [ ] *Send email*
+- [ ] *Send email with verification during register**
 
 ---
 #### SongRequests app
 - [ ] views:
-  - [ ] Manage `Song` just for logged in `User`
   - [ ] View `Song`/`Playlist` for not logged in `User`
-  - [x] Add `Song`
   - [ ] Delete `Song`
-  - [ ] Make `Playlist`
+  - [ ] View `Playlist` with containing songs (REST) playlist/\<int:nr_playlist>
 - [x] models
-  - [x] Add field to `Song`:
-    - [x] `add_date`
-  - [x] Add field to `Playlist`:
-    - [x] `add_date`
-    - [x] `last_modified_date`
 
 
 ---
 #### MeetApp app
-- [ ] Add `Meeting` model with:
-  - [ ] `creator` ForeignKey
-  - [ ] `participants` ManyToMany
-  - [ ] `playlist` ForeignKey
-  - [ ] `title` 
-  - [ ] `location`
-  - [ ] `date`
-  - [ ] `created_date`
-  - [ ] `last_modified_date`
-- [ ] Logged in `User` can add a `Meeting`
+- [x] Add `Meeting` model
+- [ ] Assure that just logged in `User` can add a `Meeting`
 
 
 ---
