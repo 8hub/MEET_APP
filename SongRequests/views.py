@@ -6,7 +6,7 @@ from django.contrib import messages
 from .models import Playlist, Song, PlaylistSong
 from .forms import AddSongForm, AddPlaylistForm
 from django.core.exceptions import ObjectDoesNotExist
-
+from django.shortcuts import get_object_or_404
 
 def index(request):
     playlists = Playlist.objects.all()
@@ -41,10 +41,20 @@ def playlist(request, playlist_id):
 
 def add_song_to_playlist(request, playlist_id):
     if request.method == "POST":
-        playlist = Playlist.objects.get(pk=playlist_id)
-        song = Song.objects.get(int(pk=request.POST["song_id"]))
-        playlist.songs.add(song)
-        return HttpResponseRedirect(reverse("SongRequests:playlist", args=(playlist_id,)))
+        playlist = get_object_or_404(Playlist, pk=playlist_id)
+        song_id = request.POST.get("song_id")
+        try:
+            song = Song.objects.get(pk=song_id)
+            PlaylistSong.objects.create(playlist=playlist, song=song)
+            messages.success(request, "Song added to playlist successfully")
+            return HttpResponseRedirect(reverse("SongRequests:playlist", args=(playlist_id,)))
+        except Song.DoesNotExist:
+            messages.error(request, "Song does not exist")
+            return HttpResponseRedirect(reverse("SongRequests:playlist", args=(playlist_id,)))
+        except Exception as e:
+            messages.error(request, f"An error occured: {str(e)}")
+            return HttpResponseRedirect(reverse("SongRequests:playlist", args=(playlist_id,)))
+    return HttpResponseRedirect(reverse("SongRequests:index"))
 
 
 @login_required(login_url="../users/login")
