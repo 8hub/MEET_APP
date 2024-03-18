@@ -3,17 +3,23 @@ from selenium.webdriver.common.by import By
 from django.test import LiveServerTestCase
 from django.contrib.auth import get_user_model
 
-User = get_user_model()
 
 class UserTest(LiveServerTestCase):
+    User = get_user_model()
 
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.browser = webdriver.Firefox()
+        cls.browser.implicitly_wait(5)  # Adjust based on your needs
+    
     def setUp(self):
-        self.browser = webdriver.Firefox()
-        self.browser.implicitly_wait(5)  # Adjust based on your needs
-        self.user = User.objects.create_user(username="testuser", password="testpassword", email="user@email.com")
-
-    def tearDown(self):
-        self.browser.quit()
+        self.user = self.User.objects.create_user(username="testuser", password="testpassword", email="user@email.com")
+    
+    @classmethod
+    def tearDownClass(cls):
+        cls.browser.quit()
+        super().tearDownClass()
 
     def login(self):
         self.browser.get(self.live_server_url + "/users/login")

@@ -147,3 +147,7 @@ Test the functionality of UsersApp:
 - login `User`
 - logout `User`
 - register `User`
+
+### test_meetapp.py
+Test the functionality of MeetApp:
+- logged in `User` cannot create a meeting in the past, but can create a meeting in the future

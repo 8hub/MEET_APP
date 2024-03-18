@@ -1,11 +1,8 @@
 from django.http import HttpResponseRedirect
 from django.test import TestCase
 from django.urls import reverse
-from UsersApp.views import index
 from django.contrib.auth import get_user_model
-from test_utils import LoggedInBaseTest
-
-User = get_user_model()
+# from test_utils import LoggedInUnitBaseTest
 
 class UsersAppViewTest(TestCase):
     def test_index_view(self):
@@ -22,7 +19,7 @@ class UsersAppViewTest(TestCase):
         self.assertTemplateUsed(response, "UsersApp/login.html")
     
     def test_login_view_redirect(self):
-        user = User.objects.create_user(username="testuser", password="testpassword")
+        get_user_model().objects.create_user(username="testuser", password="testpassword")
         response = self.client.post(reverse("UsersApp:login"), {"username": "testuser", "password": "testpassword"})
         self.assertEqual(response.status_code, 302)
         

@@ -4,14 +4,16 @@ from django.test import LiveServerTestCase
 
 class TopBarLinksTest(LiveServerTestCase):
 
-    def setUp(self):
-        self.browser = webdriver.Firefox()
-        self.browser.implicitly_wait(5)  # Adjust based on your needs
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.browser = webdriver.Firefox()
+        cls.browser.implicitly_wait(5)  # Adjust based on your needs
 
-
-    def tearDown(self):
-        self.browser.quit()
-
+    @classmethod
+    def tearDownClass(cls):
+        cls.browser.quit()
+        super().tearDownClass()
 
     def test_top_bar_links_text(self):
         self.browser.get(self.live_server_url)

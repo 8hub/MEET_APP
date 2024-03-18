@@ -1,7 +1,6 @@
 from django.http import HttpResponseRedirect
 from django.test import TestCase
 from django.urls import reverse
-from MeetApp.views import index
 from django.contrib.auth import get_user_model
 
 class MeetAppViewTest(TestCase):

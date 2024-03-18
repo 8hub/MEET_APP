@@ -1,10 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from django.test import LiveServerTestCase
-from django.contrib.auth import get_user_model
 from test_utils import FunctionalBaseTest
-
-User = get_user_model()
 
 class MeetAppTest(FunctionalBaseTest):
 
@@ -16,10 +13,10 @@ class MeetAppTest(FunctionalBaseTest):
         self.browser.find_element(By.CSS_SELECTOR, "input[name='date']").send_keys("2021-12-12")
         self.browser.find_element(By.CSS_SELECTOR, "input[name='time']").send_keys("12:00")
         self.browser.find_element(By.CSS_SELECTOR, "input[name='location']").send_keys("Test Location")
-        self.browser.find_element(By.CSS_SELECTOR, "input[name='users']").click()
+        self.browser.find_element(By.CSS_SELECTOR, "input[id='id_users_2']").click()
+        self.browser.find_element(By.CSS_SELECTOR, "input[id='id_users_3']").click()
         self.browser.find_element(By.CSS_SELECTOR, "input[type='submit']").click()
         self.assertIn("Meeting cannot be in the past", self.browser.page_source)
-
         self.browser.find_element(By.CSS_SELECTOR, "input[name='date']").clear()
         self.browser.find_element(By.CSS_SELECTOR, "input[name='date']").send_keys("2024-12-12")
         self.browser.find_element(By.CSS_SELECTOR, "input[type='submit']").click()

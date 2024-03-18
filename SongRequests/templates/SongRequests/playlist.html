@@ -1,0 +1,15 @@
+{% extends "main_layout.html" %}
+{% block title %}Playlist{% endblock title %}
+
+{% block body %}
+    <h1>Playlist</h1>
+    <h3>{{playlist.title}}</h3>
+    <ul>
+        {% for song in playlist.songs %}
+            <li>{{ song.title }} - {{ song.artist }}</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'SongRequests:add_song_to_playlist' %}">Add a song</a>
+    <a href="{% url 'SongRequests:index'%}">All playlists</a>
+
+{% endblock body %}
