@@ -1,7 +1,3 @@
-- [ ] describe the models and their connection
-
----
-
 - [1. Introduction](#1-introduction)
   - [1.1. MeetApp](#11-meetapp)
   - [1.2. UsersApp](#12-usersapp)
@@ -19,7 +15,7 @@
     - [3.2.1. test\_loading.py](#321-test_loadingpy)
     - [3.2.2. test\_songrequests.py](#322-test_songrequestspy)
     - [3.2.3. test\_user.py](#323-test_userpy)
-    - [test\_meetapp.py](#test_meetapppy)
+    - [3.2.4. test\_meetapp.py](#324-test_meetapppy)
 
 
 # 1. Introduction
@@ -32,12 +28,17 @@ This is a simple app that allows you to create and manage meetings. It contain 3
 
 ## 1.1. MeetApp
 This app is responsible for creating and managing meetings. It contains the following models:
+- `Meeting`
 
 ## 1.2. UsersApp
 This app is responsible for creating and managing users. It contains the following models:
+- `User`
 
 ## 1.3. SongRequests
 This app is responsible for creating and managing songs and playlists. It contains the following models:
+- `Song`
+- `Playlist`
+- `SongPlaylist` - *links the `Song` to `Playlist`*
 
 ---
 # 2. models.py
@@ -56,19 +57,21 @@ class Meeting(models.Model):
 ```
 
 ## 2.2. UsersApp
-Created custom `User` with plan for future update.\
-To access the `User` in each app the `AUTH_USER_MODEL = "UsersApp.User"` was added to `settings.py`
-To access `User`:
+To validate a `username`, `email` and `password` in the model layer the `CustomUserManager` class was added. With this approach even the `User` that is created programmatically - batch script, admin or APIs - will be validated.
 ```python
-from django.contrib.auth import get_user_model
-User = get_user_model()
+class CustomUserManager(BaseUserManager)
 ```
 
 ```python
 class User(AbstractUser):
-  '''Plan to modify in the future
-  Add followers etc.'''
-  pass
+    objects = CustomUserManager()
+```
+
+`User` inherit form `AbstractUser`, so it can be customized.\
+The `AUTH_USER_MODEL = "UsersApp.User"` was added to `settings.py` so in each app `User` can be accessed through `get_user_model()` method:
+```python
+from django.contrib.auth import get_user_model
+User = get_user_model()
 ```
 
 
@@ -135,6 +138,8 @@ Testing `models.py` cannot be done using VSCode *Test Explorer* without importin
   - test index view
   - test login view
   - test login view redirection after logging in
+- test_models.py
+  - create `User` with correct data
 
 ## 3.2. functional tests
 ### 3.2.1. test_loading.py
@@ -152,6 +157,6 @@ Test the functionality of UsersApp:
 - logout `User`
 - register `User`
 
-### test_meetapp.py
+### 3.2.4. test_meetapp.py
 Test the functionality of MeetApp:
 - logged in `User` cannot create a meeting in the past, but can create a meeting in the future

@@ -10,6 +10,7 @@ class CustomUserManager(BaseUserManager):
         if not email:
             raise ValueError("Users must have an email")
         if password is not None:
+            # validate the password before it is hashed
             validate_password(password, user=self.model(username=username, email=email, **extra_fields))
         else:
             raise ValueError("The password must be set")
@@ -19,7 +20,8 @@ class CustomUserManager(BaseUserManager):
             email=self.normalize_email(email),
             **extra_fields
         )
-        user.set_password(password)
+        # hash the password to store it in the database
+        user.set_password(password) 
         user.save(using=self._db)
         return user
 
