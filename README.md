@@ -19,6 +19,7 @@
     - [3.2.1. test\_loading.py](#321-test_loadingpy)
     - [3.2.2. test\_songrequests.py](#322-test_songrequestspy)
     - [3.2.3. test\_user.py](#323-test_userpy)
+    - [test\_meetapp.py](#test_meetapppy)
 
 
 # 1. Introduction
@@ -106,26 +107,29 @@ To each app directory was added *test* folder in which are placed tests:
 - test_models.py
 - test_templates.py
 
-`from django.test import TestCase` is not supported by `unittest`, so `pytest-django` have to be installed to run tests in *VSCode Test Explorer*
+`from django.test import TestCase` is not supported by `unittest`, so `pytest-django` have to be installed to run tests in *VSCode Test Explorer*.
 
-To enable running tests in VSCode to each test was added suffix:
-
-```python
-import os
-from django import setup
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "MEET_APP.settings")
-setup()
+To enable running tests in VSCode the `pytest.ini` had to be configured:
+```ini
+[pytest]
+DJANGO_SETTINGS_MODULE = MEET_APP.settings
+python_files = tests.py test_*.py *_tests.py
 ```
+
+Testing `models.py` cannot be done using VSCode *Test Explorer* without importing models inside each `test_method()`. Because of that, to stick with maintainability of the code, each `test_models.py` file will be run through **django-test framework**.
 
 ### 3.1.1. MeetApp
 - test_views.py
   - redirection to `MeetApp:index`
   - status code of `MeetApp:index`
   - template used for `MeetApp:index`
+- test_models.py
+  - create a `Meeting`
 ### 3.1.2. SongRequests
 - test_views.py
   - redirection to `SongRequests:index`
-  - 
+- test_models.py
+  - create a `Song`
 ### 3.1.3. UsersApp
 - test_views.py
   - test index view

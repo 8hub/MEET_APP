@@ -19,7 +19,7 @@ class UsersAppViewTest(TestCase):
         self.assertTemplateUsed(response, "UsersApp/login.html")
     
     def test_login_view_redirect(self):
-        get_user_model().objects.create_user(username="testuser", password="testpassword")
+        get_user_model().objects.create_user(username="testuser", email="test@email.com", password="testpassword")
         response = self.client.post(reverse("UsersApp:login"), {"username": "testuser", "password": "testpassword"})
         self.assertEqual(response.status_code, 302)
         
