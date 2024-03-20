@@ -2,7 +2,6 @@ from django.http import HttpResponseRedirect
 from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth import get_user_model
-# from test_utils import LoggedInUnitBaseTest
 
 class UsersAppViewTest(TestCase):
     def test_index_view(self):

@@ -5,7 +5,7 @@ from test_utils import FunctionalBaseTest
 
 class MeetAppTest(FunctionalBaseTest):
 
-    def test_create_meeting(self):
+    def test_create_meeting_when_logged_in(self):
         self.login()
         self.browser.get(self.live_server_url + "/create_meeting")
         self.browser.find_element(By.CSS_SELECTOR, "input[name='name']").send_keys("Test Meeting")
@@ -22,4 +22,10 @@ class MeetAppTest(FunctionalBaseTest):
         self.browser.find_element(By.CSS_SELECTOR, "input[type='submit']").click()
         self.assertIn("Meeting created successfully", self.browser.page_source)
 
-    
+    def test_create_meeting_when_not_logged_in(self):
+        self.browser.get(self.live_server_url + "/create_meeting")
+        self.assertTemplateUsed("login.html")
+        self.browser.find_element(By.CSS_SELECTOR, "input[type='text']").send_keys("testuser")
+        self.browser.find_element(By.CSS_SELECTOR, "input[type='password']").send_keys("testpassword")
+        self.browser.find_element(By.CSS_SELECTOR, "input[type='submit']").click()
+        self.assertTemplateUsed("create_meeting.html")

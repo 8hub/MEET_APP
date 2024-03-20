@@ -30,7 +30,7 @@ class FunctionalBaseTest(LiveServerTestCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.browser = webdriver.Firefox()
-        cls.browser.implicitly_wait(5)  # Adjust based on your needs
+        cls.browser.implicitly_wait(5)
 
     @classmethod
     def tearDownClass(cls):

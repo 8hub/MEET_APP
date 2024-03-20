@@ -28,10 +28,8 @@
 
 ---
 #### MeetApp app
-- [ ] Assure that just logged in `User` can add a `Meeting`
+- [x] Assure that just logged in `User` can add a `Meeting`
 
 
 ---
 #### DOCUMENTATION
-
-- [ ] describe models.py <--

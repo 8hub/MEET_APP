@@ -140,6 +140,13 @@ Testing `models.py` cannot be done using VSCode *Test Explorer* without importin
   - test login view redirection after logging in
 - test_models.py
   - create `User` with correct data
+  - test creation of `User` with no username
+  - test creation of `User` with no email
+  - test creation of `User` with no password
+  - test creation of `User` with invalid email
+  - test creation of `User` with invalid password
+  - 
+
 
 ## 3.2. functional tests
 ### 3.2.1. test_loading.py
