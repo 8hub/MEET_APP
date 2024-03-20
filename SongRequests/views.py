@@ -35,8 +35,13 @@ def add_song(request):
     })
 
 def playlist(request, playlist_id):
+    try:
+        this_playlist = Playlist.objects.get(pk=playlist_id)
+    except ObjectDoesNotExist:
+        messages.error(request, f"Playlist id {playlist_id} does not exist")
+        return HttpResponseRedirect(reverse("SongRequests:index"))
     return render(request, "SongRequests/playlist.html",{
-        "playlist": Playlist.objects.get(pk=playlist_id)
+        "playlist": this_playlist
     })
 
 def add_song_to_playlist(request, playlist_id):

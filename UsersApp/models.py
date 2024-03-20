@@ -33,4 +33,5 @@ class CustomUserManager(BaseUserManager):
 
 
 class User(AbstractUser):
+    # override the default Manager
     objects = CustomUserManager()

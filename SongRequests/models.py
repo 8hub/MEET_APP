@@ -32,6 +32,9 @@ class Playlist(models.Model):
     def count(self):
         return self.songs.count()
 
+    def is_anonymous(self):
+        return self.anonymous
+
     def list_songs_by_add_date(self):
         # 'playlistsong__add_date' refers to PlaylistSong add_date field
         return self.songs.all().order_by('playlistsong__add_date')

@@ -20,9 +20,9 @@
 ---
 #### SongRequests app
 - [ ] views:
-  - [ ] View `Playlist` with containing songs (REST) playlist/\<int:nr_playlist>
+  - [x] View `Playlist` with containing songs (REST) playlist/\<int:nr_playlist>
   - [ ] Add a `Song` to existing playlist
-  - [ ] View `Song`/`Playlist` for not logged in `User`
+  - [x] View `Song`/`Playlist` for not logged in `User`
   - [ ] Delete `Song`
 
 
