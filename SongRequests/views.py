@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib import messages
 from .models import Playlist, Song, PlaylistSong
-from .forms import AddSongForm, AddPlaylistForm
+from .forms import AddSongForm, AddPlaylistForm, AddSongToPlaylistForm
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import get_object_or_404
 
@@ -45,21 +45,36 @@ def playlist(request, playlist_id):
     })
 
 def add_song_to_playlist(request, playlist_id):
-    if request.method == "POST":
-        playlist = get_object_or_404(Playlist, pk=playlist_id)
-        song_id = request.POST.get("song_id")
+    form = AddSongToPlaylistForm(playlist_id, request.POST or None)
+    playlist = get_object_or_404(Playlist, pk=playlist_id)
+    if request.method == "POST" and form.is_valid():
+        songs = form.cleaned_data["songs"]
+        if not songs:
+            messages.error(request, "Select at least one song to add to playlist")
+            return render(request, "SongRequests/add_song_to_playlist.html", {
+                "form": form,
+                "playlist": playlist
+            })
         try:
-            song = Song.objects.get(pk=song_id)
-            PlaylistSong.objects.create(playlist=playlist, song=song)
+            playlist.add_songs(songs)
             messages.success(request, "Song added to playlist successfully")
-            return HttpResponseRedirect(reverse("SongRequests:playlist", args=(playlist_id,)))
+            return render(request, "SongRequests/add_song_to_playlist.html", {
+                "form": AddSongToPlaylistForm(playlist_id),
+                "playlist": playlist
+            })
         except Song.DoesNotExist:
             messages.error(request, "Song does not exist")
-            return HttpResponseRedirect(reverse("SongRequests:playlist", args=(playlist_id,)))
+            return render(request, "SongRequests/add_song_to_playlist.html", {
+                "form": form,
+                "playlist": playlist
+            })
         except Exception as e:
             messages.error(request, f"An error occured: {str(e)}")
             return HttpResponseRedirect(reverse("SongRequests:playlist", args=(playlist_id,)))
-    return HttpResponseRedirect(reverse("SongRequests:index"))
+    return render(request, "SongRequests/add_song_to_playlist.html", {
+        "form": form,
+        "playlist": playlist
+    })
 
 
 @login_required(login_url="../users/login")

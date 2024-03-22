@@ -11,7 +11,7 @@
             <li>No songs in the playlist.</li>
         {% endfor %}
     </ul>
-    {% comment %} <a href="{% url 'SongRequests:add_song_to_playlist' %}">Add a song</a> {% endcomment %}
+    <a href="{% url 'SongRequests:add_song_to_playlist' playlist.id%}">Add a song</a>
     <a href="{% url 'SongRequests:index'%}">All playlists</a>
 
 {% endblock body %}

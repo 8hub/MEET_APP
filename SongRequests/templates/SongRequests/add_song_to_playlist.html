@@ -1,0 +1,11 @@
+{% extends "main_layout.html" %}
+{% block title %}Add song to playlist{% endblock title %}
+
+{% block body %}
+    <h1>Add song to playlist</h1>
+    <form method="post" action="{% url 'SongRequests:add_song_to_playlist' playlist.id %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Add song">
+    </form>
+{% endblock body %}

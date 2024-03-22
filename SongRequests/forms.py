@@ -14,4 +14,12 @@ class AddPlaylistForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super(AddPlaylistForm, self).__init__(*args, **kwargs)
         self.fields['songs'].choices = [(song.id, str(song)) for song in Song.objects.all()]
-        
+
+class AddSongToPlaylistForm(forms.Form):
+    songs = forms.MultipleChoiceField(label="Songs", choices=[], required=False, widget=forms.CheckboxSelectMultiple)
+    
+    def __init__(self, playlist_id, *args, **kwargs):
+        super(AddSongToPlaylistForm, self).__init__(*args, **kwargs)
+        playlist = Playlist.objects.get(pk=playlist_id)
+        songs_in_playlist = [playlist_song.song for playlist_song in playlist.playlistsong_set.all()]
+        self.fields['songs'].choices = [(song.id, str(song)) for song in Song.objects.all() if song not in songs_in_playlist]
