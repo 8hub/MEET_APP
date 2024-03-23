@@ -21,3 +21,12 @@ class LoggedInAddSongViewTest(LoggedInUnitBaseTest):
         response = self.client.get(reverse("SongRequests:add_song"))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "SongRequests/add_song.html")
+
+    def test_add_song_view_template(self):
+        response = self.client.get(reverse("SongRequests:add_song"))
+        self.assertTemplateUsed(response, "SongRequests/add_song.html")
+
+    def test_add_song_view_post(self):
+        response = self.client.post(reverse("SongRequests:add_song"), {"title": "Test Song", "artist": "Test Artist", "url_field": "https://www.testurl.com"})
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse("SongRequests:index"))

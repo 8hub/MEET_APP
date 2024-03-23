@@ -101,7 +101,16 @@ class PlaylistSong(models.Model):
   song = models.ForeignKey('Song',on_delete=models.CASCADE)
   add_date = models.DateTimeFiel(auto_now_add=True)
 ```
-
+During creation of the model `Playlist` on the model the validation was added - if the `Playlist` with the same title exist, do not create another one:
+```python
+def save(self, *args, **kwargs):
+  if self.title:
+    if self.title in Playlist.objects.values_list('title', flat=True):
+      raise IntegrityError("Playlist with this title already exists.")
+    super().save(*args, **kwargs)
+  else:
+    raise ValueError("Playlist must have a title.")
+```
 # 3. tests
 
 ## 3.1. unit tests
@@ -128,10 +137,26 @@ Testing `models.py` cannot be done using VSCode *Test Explorer* without importin
   - template used for `MeetApp:index`
 - test_models.py
   - create a `Meeting`
+  - add `User` to `Meeting`
+  - remove `User` from `Meeting`
+  - clear `Meeting` from `Users`
+
+
 ### 3.1.2. SongRequests
 - test_views.py
-  - redirection to `SongRequests:index`
+  - load `SongRequests:index`
+  - load `SongRequests:add_song`
+  - logged in `User` can add a `Song`
+  - if `User` want to add a `Song` and is not logged in redirect to `UserApp/login.html`
 - test_models.py
+  - test creation of `Song` with all required fields
+  - test creation of `Song` without title
+  - test creation of `Song` without artist and URL
+  - test creation of `Playlist` with all required fields
+  - test creation of `Playlist` without title
+  - test creation of `Playlist` with the same title
+  - test adding `Song` to existing `Playlist`
+  - test creation of `Playlist` 
   - create a `Song`
 ### 3.1.3. UsersApp
 - test_views.py

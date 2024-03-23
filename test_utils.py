@@ -10,10 +10,10 @@ class LoggedInUnitBaseTest(TestCase):
     def setUp(self):
         super().setUp()
         self.user = get_user_model().objects.create_user(username="testuser", password="testpassword", email="test@email.com")
-        get_user_model().objects.create_user(username="testuser2", password="testpassword", email="test2@email.com")
-        get_user_model().objects.create_user(username="testuser3", password="testpassword", email="test3@email.com")
-        get_user_model().objects.create_user(username="testuser4", password="testpassword", email="test4@email.com")
-        get_user_model().objects.create_user(username="testuser5", password="testpassword", email="test5@email.com")
+        self.user2 = get_user_model().objects.create_user(username="testuser2", password="testpassword", email="test2@email.com")
+        self.user3 = get_user_model().objects.create_user(username="testuser3", password="testpassword", email="test3@email.com")
+        self.user4 = get_user_model().objects.create_user(username="testuser4", password="testpassword", email="test4@email.com")
+        self.user5 = get_user_model().objects.create_user(username="testuser5", password="testpassword", email="test5@email.com")
         self.client.login(username="testuser", password="testpassword")
     
     def tearDown(self):

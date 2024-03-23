@@ -17,7 +17,7 @@ class Meeting(models.Model):
     def __str__(self):
         return f"{self.name} meeting"
     
-    def count(self):
+    def count_participants(self):
         return self.users.count()
     
     def get_users(self):
@@ -49,3 +49,8 @@ class Meeting(models.Model):
     
     def clear_users(self):
         self.users.clear()
+    
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        if self.creator not in self.users.all():
+            self.add_user(self.creator)
