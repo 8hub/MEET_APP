@@ -2,14 +2,18 @@ from django import forms
 from SongRequests.models import Song, Playlist
 
 class AddSongForm(forms.Form):
+    # required
     title = forms.CharField(label="Song Title", min_length=3, max_length=64)
+    # optional
     artist = forms.CharField(label="Artist", max_length=64, required=False)
     url_field = forms.URLField(label="URL", required=False)
 
 class AddPlaylistForm(forms.Form):
+    # required
     title = forms.CharField(label="Playlist Title", min_length=3, max_length=64)
+    anonymous = forms.BooleanField(label="Anonymous", initial=False)
+    # optional
     songs = forms.MultipleChoiceField(label="Songs", choices=[], required=False, widget=forms.CheckboxSelectMultiple) 
-    anonymous = forms.BooleanField(label="Anonymous", required=False, initial=False)
 
     def __init__(self, *args, **kwargs):
         super(AddPlaylistForm, self).__init__(*args, **kwargs)

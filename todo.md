@@ -1,17 +1,19 @@
 #### GLOBALY
 - [ ] Add functional tests
-  - [ ] UserApp
-  - [ ] MeetApp
+  - [x] UserApp
+  - [x] MeetApp
   - [ ] SongRequests
     - [ ] Login -> go to `Playlist` -> add a `Song`
+    - [ ] Login -> Add a `Song` to existing `Playlist`
 - [ ] Add unit tests
   - [ ] UserApp
-    - [ ] test `User` model each field verification
+    - [x] test `User` model each field verification
   - [ ] MeetApp
-    - [ ] just login user can add meeting
+    - [x] just login user can add meeting
   - [ ] SongRequests
-    - [ ] add a song to existing playlist
-    - [ ] adding a song create a M2M relation: `Song` with `Playlist` through `PlaylistSong` model
+    - [x] add a song to existing playlist
+    - [x] adding a song create a M2M relation: `Song` with `Playlist` through `PlaylistSong` model
+    - [x] Add a `Song` to existing `Playlist`
 
 ---
 #### UserApp app
@@ -21,7 +23,8 @@
 #### SongRequests app
 - [ ] views:
   - [x] View `Playlist` with containing songs (REST) playlist/\<int:nr_playlist>
-  - [ ] Add a `Song` to existing playlist
+  - [x] Add a `Song` to existing playlist
+  - [ ] After adding a `Song` to playlist refresh the form
   - [x] View `Song`/`Playlist` for not logged in `User`
   - [ ] Delete `Song`
 
@@ -33,3 +36,4 @@
 
 ---
 #### DOCUMENTATION
+- [ ] Logged in `User` can add a `Song` to existing `Playlist`
