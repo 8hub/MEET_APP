@@ -26,11 +26,13 @@ class LoggedInUnitBaseTest(TestCase):
 
 
 class FunctionalBaseTest(LiveServerTestCase):
+    DEFAULT_WAIT = 3
+
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
         cls.browser = webdriver.Firefox()
-        cls.browser.implicitly_wait(5)
+        cls.browser.implicitly_wait(cls.DEFAULT_WAIT)
 
     @classmethod
     def tearDownClass(cls):
@@ -38,11 +40,11 @@ class FunctionalBaseTest(LiveServerTestCase):
         super().tearDownClass()
 
     def setUp(self):
-        self.user = get_user_model().objects.create_user(username="testuser", password="testpassword", email="user@email.com")
-        get_user_model().objects.create_user(username="testuser2", password="testpassword", email="test2@email.com")
-        get_user_model().objects.create_user(username="testuser3", password="testpassword", email="test3@email.com")
-        get_user_model().objects.create_user(username="testuser4", password="testpassword", email="test4@email.com")
-        get_user_model().objects.create_user(username="testuser5", password="testpassword", email="test5@email.com")
+        self.user  = get_user_model().objects.create_user(username="testuser",  password="testpassword", email="test@email.com")
+        self.user2 = get_user_model().objects.create_user(username="testuser2", password="testpassword", email="test2@email.com")
+        self.user3 = get_user_model().objects.create_user(username="testuser3", password="testpassword", email="test3@email.com")
+        self.user4 = get_user_model().objects.create_user(username="testuser4", password="testpassword", email="test4@email.com")
+        self.user5 = get_user_model().objects.create_user(username="testuser5", password="testpassword", email="test5@email.com")
 
 
     def login(self):

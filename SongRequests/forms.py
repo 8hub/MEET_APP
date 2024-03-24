@@ -11,8 +11,8 @@ class AddSongForm(forms.Form):
 class AddPlaylistForm(forms.Form):
     # required
     title = forms.CharField(label="Playlist Title", min_length=3, max_length=64)
-    anonymous = forms.BooleanField(label="Anonymous", initial=False)
     # optional
+    anonymous = forms.BooleanField(label="Anonymous", initial=False, required=False)
     songs = forms.MultipleChoiceField(label="Songs", choices=[], required=False, widget=forms.CheckboxSelectMultiple) 
 
     def __init__(self, *args, **kwargs):

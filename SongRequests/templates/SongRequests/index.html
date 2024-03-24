@@ -6,12 +6,18 @@ Song requests
 
 {% block body %}
 <p>Here are the playlists:</p>
-{% for playlist in playlists %}
-    <li> <a href="{% url 'SongRequests:playlist' playlist.id %}"> {{ playlist.title }}</a>
-        by {% if playlist.is_anonymous %} Anonymous {% else %} {{ playlist.created_by }} {% endif %}</li>
-{% empty %}
-    <li> No playlists yet </li>
-{%endfor%}
+{% if playlists %}
+    <ul class='playlist-list'>
+        {% for playlist in playlists %}
+            <li>
+                <a href="{% url 'SongRequests:playlist' playlist.id %}"> {{ playlist.title }}</a>
+                by {% if playlist.is_anonymous %} Anonymous {% else %} {{ playlist.created_by }} {% endif %}
+            </li>
+        {%endfor%}
+    </ul>
+{% else %}
+<p> No playlists yet </p>
+{% endif %}
 
 <a href="{% url 'SongRequests:add_song' %}">Add a song</a>
 <a href="{% url 'SongRequests:add_playlist' %}">Add a playlist</a>

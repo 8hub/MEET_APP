@@ -8,36 +8,20 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
+from bs4 import BeautifulSoup
 from django.test import LiveServerTestCase
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 from SongRequests.models import Playlist
+from test_utils import FunctionalBaseTest
 
 User = get_user_model()
 
-class SongTest(LiveServerTestCase):
-    DEFAULT_WAIT = 3
-
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        cls.browser = webdriver.Firefox()
-        cls.browser.implicitly_wait(cls.DEFAULT_WAIT)
-    
-    def setUp(self):
-        self.user = User.objects.create_user(username="testuser", password="testpassword", email="user@email.com")
-    
-    @classmethod
-    def tearDownClass(cls):
-        cls.browser.quit()
-        super().tearDownClass()
-    
+class SongTest(FunctionalBaseTest):
     def wait_for_element(self, element):
         self.browser.implicitly_wait(self.DEFAULT_WAIT)
         self.browser.find_element(By.CSS_SELECTOR, element)
-    
-    def wait_3(self):
-        time.sleep(3)
+
 
     def add_song(self, title, artist, url_field):
         self.browser.get(self.live_server_url + "/song_request/add_song")
@@ -46,21 +30,18 @@ class SongTest(LiveServerTestCase):
         self.browser.find_element(By.CSS_SELECTOR, "input[name='url_field']").send_keys(url_field)
         self.browser.find_element(By.CSS_SELECTOR, "input[type='submit']").click()
 
-    def login(self):
-        self.browser.get(self.live_server_url + "/users/login")
-        self.browser.find_element(By.CSS_SELECTOR, "input[type='text']").send_keys("testuser")
-        self.browser.find_element(By.CSS_SELECTOR, "input[type='password']").send_keys("testpassword")
-        self.browser.find_element(By.CSS_SELECTOR, "input[type='submit']").click()
 
-    def mark_song_to_add(self, song_id):
-        self.browser.find_element(By.ID, f"id_songs_{song_id}").click()
+    def mark_song_to_add(self, song_nr):
+        self.browser.find_element(By.CSS_SELECTOR, f"input[value='{song_nr}']").click()
+
 
     def test_add_song(self):
         self.login()
         self.add_song("Test Song", "Test Artist", "https://www.youtube.com/watch?v=123456")
         self.assertIn("Song added successfully", self.browser.page_source)
 
-    def test_add_playlist(self):
+
+    def test_add_playlist_with_songs_and_modify_it(self):
         self.login()
         # add 5 test songs
         for i in range(1, 6):
@@ -75,7 +56,22 @@ class SongTest(LiveServerTestCase):
         self.browser.find_element(By.CSS_SELECTOR, "input[type='submit']").click()
         self.assertEqual(Playlist.objects.count(), 1)
         self.assertIn("Playlist created successfully", self.browser.page_source)
-        self.assertIn("Test Playlist by testuser", self.browser.page_source)
+        self.assertEqual(Playlist.objects.first().songs.count(), 2)
+
+        soup = BeautifulSoup(self.browser.page_source, "html.parser")
+        playlist_list = soup.find("ul", class_="playlist-list")
+        self.assertIn("Test Playlist", playlist_list.text)
+        self.assertIn("testuser", playlist_list.text)
+        
+        self.browser.get(self.live_server_url + reverse("SongRequests:index"))
+        self.browser.find_element(By.LINK_TEXT, "Test Playlist").click()
+        self.assertIn("Test Song 1 - Test Artist 1", self.browser.page_source)
+        self.assertIn("Test Song 3 - Test Artist 3", self.browser.page_source)
+        self.browser.find_element(By.LINK_TEXT, "Add a song").click()
+        self.mark_song_to_add("2")
+        self.browser.find_element(By.CSS_SELECTOR, "input[type='submit']").click()
+        self.assertEqual(Playlist.objects.first().songs.count(), 3)
+
 
     def test_redirections_add_song(self):
         self.browser.get(self.live_server_url + "/song_request/")
