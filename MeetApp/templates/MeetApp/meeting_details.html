@@ -10,7 +10,7 @@
     <p>Meeting description: {{ meeting.description }}</p>
     <p>Participants:</p>
     <ul>
-    {% for user in meeting.users.all %}
+    {% for user in meeting.participants.all %}
         <li>{{ user }}</li>
     {% empty %}
         <li>No participants</li>

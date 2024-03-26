@@ -35,7 +35,7 @@ class MeetingModelTest(LoggedInUnitBaseTest):
         meeting.remove_user(self.user3)
         self.assertEqual(meeting.count_participants(), 1)
 
-    def test_clear_users_from_meeting(self):
+    def test_clear_participants_from_meeting(self):
         self.assertEqual(Meeting.objects.count(), 0)
         tomorrow = timezone.now() + timezone.timedelta(days=1)
         meeting = Meeting.objects.create(creator=self.user ,name="Test Meeting", description="Test Description", date=tomorrow, time="12:00", location="Test Location")
@@ -44,6 +44,6 @@ class MeetingModelTest(LoggedInUnitBaseTest):
         self.assertEqual(meeting.count_participants(), 2)
         meeting.add_user(self.user3)
         self.assertEqual(meeting.count_participants(), 3)
-        meeting.clear_users()
+        meeting.clear_participants()
         self.assertEqual(meeting.count_participants(), 0)
         

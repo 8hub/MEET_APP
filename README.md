@@ -43,6 +43,7 @@ This app is responsible for creating and managing songs and playlists. It contai
 ---
 # 2. models.py
 ## 2.1. MeetApp
+To assure that each `User` is at most list once in each `Meeting` the `MeetingParticipant` model was created.
 ```python
 class Meeting(models.Model):
   creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="created_meetings")
@@ -51,9 +52,13 @@ class Meeting(models.Model):
   date = models.DateField()
   time = models.TimeField()
   location = models.CharField(max_length=64)
-  users = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name="meetings")
+  participants = models.ManyToManyField(settings.AUTH_USER_MODEL, through='MeetingParticipant', blank=True, related_name="meetings")
   add_date = models.DateTimeField(auto_now_add=True, blank=True, null=True)
   last_modified = models.DateTimeField(auto_now=True)
+
+class MeetingParticipant(models.Model):
+  participant = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+  meeting = models.ForeignKey('Meeting', on_delete=models.CASCADE)
 ```
 
 ## 2.2. UsersApp

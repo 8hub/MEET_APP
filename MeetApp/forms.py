@@ -5,9 +5,9 @@ import datetime
 class MeetingForm(forms.ModelForm):
     class Meta:
         model = Meeting
-        fields = ["name", "description", "date", "time", "location", "users"]
+        fields = ["name", "description", "date", "time", "location", "participants"]
         widgets = {
-            "users": forms.CheckboxSelectMultiple,
+            "participants": forms.CheckboxSelectMultiple,
             "description": forms.Textarea(attrs={'cols': 80, 'rows': 3}),  # Customizing widget for a model field
             "date": forms.DateInput(attrs={'type': 'date'}),  # Using HTML5 date picker
             "time": forms.TimeInput(attrs={'type': 'time'}),  # Using HTML5 time picker
@@ -18,13 +18,16 @@ class MeetingForm(forms.ModelForm):
             "date": "Meeting Date",
             "time": "Meeting Time",
             "location": "Meeting Location",
-            "users": "Meeting Participants"
+            "participants": "Meeting Participants"
         }
     def __init__(self, *args, **kwargs):
+        exclude_user = kwargs.pop("exclude_user", None)
         super(MeetingForm, self).__init__(*args, **kwargs)
-        self.fields["users"].queryset = self.fields["users"].queryset.filter(is_active=True)
-        self.fields["users"].required = False
-        self.fields["users"].help_text = "Select participants for the meeting"
+        self.fields["participants"].queryset = self.fields["participants"].queryset.filter(is_active=True)
+        self.fields["participants"].required = False
+        self.fields["participants"].help_text = "Select participants for the meeting"
+        if exclude_user:
+            self.fields["participants"].queryset = self.fields["participants"].queryset.exclude(id=exclude_user.id)
     
     def clean(self):
         cleaned_data = super(MeetingForm, self).clean()
