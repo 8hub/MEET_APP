@@ -42,8 +42,11 @@ class SongTest(FunctionalBaseTest):
 
 
     def test_add_playlist_with_songs_and_modify_it(self):
+        """
+        Test create a playlist with songs,
+        then add a new song
+        """
         self.login()
-        # add 5 test songs
         for i in range(1, 6):
             self.add_song(f"Test Song {i}", f"Test Artist {i}", f"https://www.youtube.com/watch?v={i}")
 

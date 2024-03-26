@@ -1,0 +1,20 @@
+{% extends "main_layout.html" %}
+{% block title %}Meeting info{% endblock title %}
+
+{% block body %}
+    <h1>Meeting info</h1>
+    <p>Meeting name: {{ meeting.name }}</p>
+    <p>Meeting date: {{ meeting.date }}</p>
+    <p>Meeting time: {{ meeting.time }}</p>
+    <p>Meeting location: {{ meeting.location }}</p>
+    <p>Meeting description: {{ meeting.description }}</p>
+    <p>Participants:</p>
+    <ul>
+    {% for user in meeting.users.all %}
+        <li>{{ user }}</li>
+    {% empty %}
+        <li>No participants</li>
+    {% endfor %}
+    </ul>
+    <a href="{% url 'MeetApp:index' %}">Back to meetings</a>
+{% endblock body %}

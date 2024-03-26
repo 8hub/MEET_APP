@@ -25,7 +25,5 @@ class MeetAppTest(FunctionalBaseTest):
     def test_create_meeting_when_not_logged_in(self):
         self.browser.get(self.live_server_url + "/create_meeting")
         self.assertTemplateUsed("login.html")
-        self.browser.find_element(By.CSS_SELECTOR, "input[type='text']").send_keys("testuser")
-        self.browser.find_element(By.CSS_SELECTOR, "input[type='password']").send_keys("testpassword")
-        self.browser.find_element(By.CSS_SELECTOR, "input[type='submit']").click()
+        self.login()
         self.assertTemplateUsed("create_meeting.html")

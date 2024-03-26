@@ -6,8 +6,10 @@
 {%block body%}
     <h1>MeetApp</h1>
     <p>MeetApp is a web application that allows users to create and join events.
-    {% for welcome in hello %}
-    <li>{{welcome}}</li>
+    {% for meeting in meetings %}
+    <li><a href="{% url 'MeetApp:meeting_details' meeting.id %}">{{meeting}}</a></li>
+    {% empty %}
+    <p>There are no meetings available</p>
     {% endfor %}
     <a href="{% url 'MeetApp:create_meeting'%}">Create a meeting</a>
 {%endblock%}

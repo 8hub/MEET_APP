@@ -3,8 +3,8 @@
   - [x] UserApp
   - [x] MeetApp
   - [ ] SongRequests
-    - [ ] Login -> go to `Playlist` -> add a `Song`
-    - [ ] Login -> Add a `Song` to existing `Playlist`
+    - [x] Login -> go to `Playlist` -> add a `Song`
+    - [x] Login -> Add a `Song` to existing `Playlist`
 - [ ] Add unit tests
   - [x] UserApp
   - [x] MeetApp
@@ -18,12 +18,19 @@
 #### SongRequests app
 - [ ] views:
   - [ ] After adding a `Song` to playlist refresh the form
+  - [ ] Delete `Song` from `Playlist`
   - [ ] Delete `Song`
 
 
 ---
 #### MeetApp app
-
+- [ ] views:
+  - [ ] List all `Meeting`
+  - [ ] Click on `Meeting` on list and show the information
+  - [ ] Add a `User` to `Meeting`
+  - [ ] Delete `Meeting`
+- [ ] models:
+  - [ ] add a through relation between `Meeting` and `User`, so in M2M relation each `User` can be assigned do each `Meeting` just once
 
 ---
 #### DOCUMENTATION

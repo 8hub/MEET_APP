@@ -15,7 +15,7 @@ class Meeting(models.Model):
     last_modified = models.DateTimeField(auto_now=True)
     
     def __str__(self):
-        return f"{self.name} meeting"
+        return f"{self.name}"
     
     def count_participants(self):
         return self.users.count()

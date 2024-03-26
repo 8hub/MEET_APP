@@ -7,8 +7,9 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
 def index(request):
+    all_meetings = Meeting.objects.all()
     return render(request, "MeetApp/index.html",{
-        "hello": ["Hey", "Hi", "Hello"]
+        "meetings": all_meetings,
     })
 
 @login_required(login_url="../users/login")
@@ -22,13 +23,23 @@ def create_meeting(request):
         time = form.cleaned_data["time"]
         location = form.cleaned_data["location"]
         users = form.cleaned_data["users"]
-        new_meeting = Meeting.objects.create(
-            creator=creator, name=name, description=description,
-            date=date, time=time, location=location)
-        new_meeting.users.set(users)
+        Meeting.objects.create(
+            creator=creator,
+            name=name,
+            description=description,
+            date=date,
+            time=time,
+            location=location,
+            users=users)
         messages.success(request, "Meeting created successfully")
         return HttpResponseRedirect(reverse("MeetApp:index"))
     
     return render(request, "MeetApp/create_meeting.html",{
         "form": form
+    })
+
+def meeting_details(request, meeting_id):
+    meeting = Meeting.objects.get(id=meeting_id)
+    return render(request, "MeetApp/meeting_details.html",{
+        "meeting": meeting
     })
