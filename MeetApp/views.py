@@ -46,7 +46,26 @@ def create_meeting(request):
     })
 
 def meeting_details(request, meeting_id):
-    meeting = Meeting.objects.get(id=meeting_id)
+    try:
+        meeting = Meeting.objects.get(id=meeting_id)
+    except Meeting.DoesNotExist:
+        messages.error(request, f"Meeting nr {meeting_id} not found")
+        return HttpResponseRedirect(reverse("MeetApp:index"))
+    can_delete = False
+    if request.user == meeting.creator:
+        can_delete = True
+    
+    if request.method == "POST":
+        user_ids_to_delete = request.POST.getlist('delete_users')
+        for user_id in user_ids_to_delete:
+            MeetingParticipant.objects.filter(meeting=meeting, participant__id=user_id).delete()
+        if user_ids_to_delete:
+            messages.success(request, "Participants deleted successfully")
+        else:
+            messages.error(request, "No participants selected for deletion")
+        return HttpResponseRedirect(reverse("MeetApp:meeting_details", args=(meeting_id,)))
+    
     return render(request, "MeetApp/meeting_details.html",{
-        "meeting": meeting
+        "meeting": meeting,
+        "can_delete": can_delete,
     })

@@ -8,13 +8,42 @@
     <p>Meeting time: {{ meeting.time }}</p>
     <p>Meeting location: {{ meeting.location }}</p>
     <p>Meeting description: {{ meeting.description }}</p>
+    {% if can_delete and meeting.participants.all.exists%}
+    <form method="POST" action="{% url 'MeetApp:meeting_details' meeting.id %}">
+        {% csrf_token %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Participant</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in meeting.participants.all %}
+                <tr>
+                    <td>{{ user }}</td>
+                    <td>
+                        <input type="checkbox" name="delete_users" value="{{ user.id }}">
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <li>No participants</li>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <button type="submit">Delete Selected</button>
+    </form>
+    {% else %}
     <p>Participants:</p>
     <ul>
-    {% for user in meeting.participants.all %}
+        {% for user in meeting.participants.all %}
         <li>{{ user }}</li>
-    {% empty %}
+        {% empty %}
         <li>No participants</li>
-    {% endfor %}
+        {% endfor %}
     </ul>
+    {% endif %}
     <a href="{% url 'MeetApp:index' %}">Back to meetings</a>
-{% endblock body %}
+    {% endblock body %}
