@@ -8,26 +8,23 @@ class CustomUserManager(BaseUserManager):
     def create_user(self, username=None, email=None, password=None, **extra_fields):
         if not username:
             raise ValueError("Users must have a username")
-        if email is not None:
-            # validate the email before it is stored in the database
-            # if the email is not valid raise ValidationError
+        if not email:
+            raise ValueError("Users must have an email address")
+        if not password:
+            raise ValueError("Users must have a password")
+        
+        email = self.normalize_email(email)
+        user = self.model(username=username, email=email, **extra_fields)
+        try:
             validate_email(email)
-        else:
-            raise ValueError("Users must have an email")
-        if password is not None:
-            # validate the password before it is hashed
-            # if the password is not valid raise ValidationError
-            validate_password(password, user=self.model(username=username, email=email, **extra_fields))
-        else:
-            raise ValueError("The password must be set")
-
-        user = self.model(
-            username=username,
-            email=self.normalize_email(email),
-            **extra_fields
-        )
-        # hash the password to store it in the database
-        user.set_password(password) 
+        except ValidationError:
+            raise ValueError("Invalid email address")
+        
+        try:
+            validate_password(password, user=user)
+            user.set_password(password)
+        except ValidationError as e:
+            raise ValueError(e)
         user.save(using=self._db)
         return user
 
