@@ -51,9 +51,13 @@ def meeting_details(request, meeting_id):
     except Meeting.DoesNotExist:
         messages.error(request, f"Meeting nr {meeting_id} not found")
         return HttpResponseRedirect(reverse("MeetApp:index"))
-    can_delete = False
+
+    all_users = get_user_model().objects.all()
+    users_not_participating = all_users.exclude(id__in=meeting.participants.all())
+    
+    is_creator = False
     if request.user == meeting.creator:
-        can_delete = True
+        is_creator = True
     
     if request.method == "POST":
         user_ids_to_delete = request.POST.getlist('delete_users')
@@ -63,9 +67,17 @@ def meeting_details(request, meeting_id):
             messages.success(request, "Participants deleted successfully")
         else:
             messages.error(request, "No participants selected for deletion")
+
+        user_ids_to_add = request.POST.getlist('add_users')
+        for user_id in user_ids_to_add:
+            MeetingParticipant.objects.create(
+                participant=get_user_model().objects.get(id=user_id),
+                meeting=meeting
+            )
         return HttpResponseRedirect(reverse("MeetApp:meeting_details", args=(meeting_id,)))
     
     return render(request, "MeetApp/meeting_details.html",{
         "meeting": meeting,
-        "can_delete": can_delete,
+        "is_creator": is_creator,
+        "users_not_participating": users_not_participating
     })

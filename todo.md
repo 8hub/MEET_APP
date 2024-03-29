@@ -13,7 +13,8 @@
 ---
 #### UserApp app
 - [ ] *Send email with verification during register**
-- [ ] Handle is_valid if the password is to similar to username
+- [x] Handle is_valid if the password is to similar to username
+- [ ] After logging in redirect to MeetApp index.html
 
 ---
 #### SongRequests app
@@ -28,7 +29,7 @@
 - [ ] views:
   - [x] List all `Meeting`
   - [x] Click on `Meeting` on list and show the information
-  - [ ] Add a `User` to `Meeting`
+  - [x] Add a `User` to `Meeting`
   - [ ] Delete `Meeting`
 - [ ] models:
   - [x] add a through relation between `Meeting` and `User`, so in M2M relation each `User` can be assigned do each `Meeting` just once
