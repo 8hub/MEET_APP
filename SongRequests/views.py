@@ -22,7 +22,7 @@ def add_song(request):
             title = form.cleaned_data["title"]
             artist = form.cleaned_data["artist"]
             url_field = form.cleaned_data["url_field"]
-            song = Song(title=title, artist=artist, url_field=url_field)
+            song = Song(title=title, artist=artist, url_field=url_field, added_by=request.user)
             song.save()
             messages.success(request, "Song added successfully")
             return HttpResponseRedirect(reverse("SongRequests:index"))
@@ -41,7 +41,8 @@ def playlist(request, playlist_id):
         messages.error(request, f"Playlist id {playlist_id} does not exist")
         return HttpResponseRedirect(reverse("SongRequests:index"))
     return render(request, "SongRequests/playlist.html",{
-        "playlist": this_playlist
+        "playlist": this_playlist,
+        "logged_in_user": request.user
     })
 
 def add_song_to_playlist(request, playlist_id):
@@ -98,3 +99,17 @@ def add_playlist(request):
     return render(request, "SongRequests/add_playlist.html",{
             "form":form
     })
+
+@login_required(login_url="../users/login")
+def delete_song(request, playlist_id, song_id):
+    try:
+        song = Song.objects.get(pk=song_id)
+    except ObjectDoesNotExist:
+        messages.error(request, f"Song id {song_id} does not exist")
+        return HttpResponseRedirect(reverse("SongRequests:index"))
+    if song.added_by != request.user:
+        messages.error(request, "You can only delete songs you added")
+        return HttpResponseRedirect(reverse("SongRequests:index"))
+    song.delete()
+    messages.success(request, "Song deleted successfully")
+    return HttpResponseRedirect(reverse("SongRequests:playlist", args=(playlist_id,)))

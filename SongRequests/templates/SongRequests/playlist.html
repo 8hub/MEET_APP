@@ -7,6 +7,9 @@
     <ul>
         {% for song in playlist.songs.all %}
             <li>{{ song.title }} - {{ song.artist }}</li>
+            {% if song.added_by == logged_in_user %}
+                <a href="{% url 'SongRequests:delete_song' playlist.id song.id %}">Delete song</a>
+            {% endif %}
         {% empty %}
             <li>No songs in the playlist.</li>
         {% endfor %}
