@@ -66,4 +66,5 @@
     </ul>
     {% endif %}
     <a href="{% url 'MeetApp:index' %}">Back to meetings</a>
+    <a href="{% url 'MeetApp:delete_meeting' meeting.id %}">Delete meeting</a>
     {% endblock body %}

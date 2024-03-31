@@ -81,3 +81,17 @@ def meeting_details(request, meeting_id):
         "is_creator": is_creator,
         "users_not_participating": users_not_participating
     })
+
+@login_required(login_url="../users/login")
+def delete_meeting(request, meeting_id):
+    try:
+        meeting = Meeting.objects.get(id=meeting_id)
+    except Meeting.DoesNotExist:
+        messages.error(request, f"Meeting nr {meeting_id} not found")
+        return HttpResponseRedirect(reverse("MeetApp:index"))
+    if request.user != meeting.creator:
+        messages.error(request, "Just creator can delete the meeting")
+        return HttpResponseRedirect(reverse("MeetApp:index"))
+    meeting.delete()
+    messages.success(request, "Meeting deleted successfully")
+    return HttpResponseRedirect(reverse("MeetApp:index"))
