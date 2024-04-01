@@ -8,11 +8,13 @@ from .forms import AddSongForm, AddPlaylistForm, AddSongToPlaylistForm
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import get_object_or_404
 
+
 def index(request):
     playlists = Playlist.objects.all()
     return render(request, "SongRequests/index.html", {
         "playlists": playlists
     })
+
 
 @login_required(login_url="/users/login")
 def add_song(request):
@@ -34,6 +36,7 @@ def add_song(request):
         "form": AddSongForm()
     })
 
+
 def playlist(request, playlist_id):
     try:
         this_playlist = Playlist.objects.get(pk=playlist_id)
@@ -44,6 +47,7 @@ def playlist(request, playlist_id):
         "playlist": this_playlist,
         "logged_in_user": request.user
     })
+
 
 def add_song_to_playlist(request, playlist_id):
     form = AddSongToPlaylistForm(playlist_id, request.POST or None)
@@ -59,10 +63,7 @@ def add_song_to_playlist(request, playlist_id):
         try:
             playlist.add_songs(songs)
             messages.success(request, "Song added to playlist successfully")
-            return render(request, "SongRequests/add_song_to_playlist.html", {
-                "form": AddSongToPlaylistForm(playlist_id),
-                "playlist": playlist
-            })
+            return HttpResponseRedirect(reverse("SongRequests:playlist", args=(playlist_id,)))
         except Song.DoesNotExist:
             messages.error(request, "Song does not exist")
             return render(request, "SongRequests/add_song_to_playlist.html", {
@@ -100,8 +101,9 @@ def add_playlist(request):
             "form":form
     })
 
+
 @login_required(login_url="/users/login")
-def delete_song(request, playlist_id, song_id):
+def delete_song(request, song_id):
     try:
         song = Song.objects.get(pk=song_id)
     except ObjectDoesNotExist:
@@ -112,4 +114,19 @@ def delete_song(request, playlist_id, song_id):
         return HttpResponseRedirect(reverse("SongRequests:index"))
     song.delete()
     messages.success(request, "Song deleted successfully")
+    return HttpResponseRedirect(reverse("SongRequests:index"))
+
+
+@login_required(login_url="/users/login")
+def remove_song_from_playlist(request, playlist_id, song_id):
+    try:
+        playlist_song = PlaylistSong.objects.get(playlist_id=playlist_id, song_id=song_id)
+    except ObjectDoesNotExist:
+        messages.error(request, f"Song id {song_id} does not exist in playlist id {playlist_id}")
+        return HttpResponseRedirect(reverse("SongRequests:index"))
+    if playlist_song.playlist.created_by != request.user:
+        messages.error(request, "You can only remove songs from playlists you created")
+        return HttpResponseRedirect(reverse("SongRequests:index"))
+    playlist_song.delete()
+    messages.success(request, "Song removed from playlist successfully")
     return HttpResponseRedirect(reverse("SongRequests:playlist", args=(playlist_id,)))

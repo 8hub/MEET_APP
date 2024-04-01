@@ -8,13 +8,13 @@
         {% for song in playlist.songs.all %}
             <li>{{ song.title }} - {{ song.artist }}</li>
             {% if song.added_by == logged_in_user %}
-                <a href="{% url 'SongRequests:delete_song' playlist.id song.id %}">Delete song</a>
+                <a href="{% url 'SongRequests:remove_song_from_playlist' playlist.id song.id %}">Remove song</a>
             {% endif %}
         {% empty %}
             <li>No songs in the playlist.</li>
         {% endfor %}
     </ul>
-    <a href="{% url 'SongRequests:add_song_to_playlist' playlist.id%}">Add a song</a>
+    <a href="{% url 'SongRequests:add_song_to_playlist' playlist.id%}">Add a song to playlist</a>
     <a href="{% url 'SongRequests:index'%}">All playlists</a>
 
 {% endblock body %}
