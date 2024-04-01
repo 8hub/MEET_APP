@@ -13,7 +13,7 @@ def index(request):
         "meetings": all_meetings,
     })
 
-@login_required(login_url="../users/login")
+@login_required(login_url="/users/login")
 def create_meeting(request):
     form = MeetingForm(request.POST or None, exclude_user=request.user)
     if request.method == "POST" and form.is_valid():
@@ -82,7 +82,7 @@ def meeting_details(request, meeting_id):
         "users_not_participating": users_not_participating
     })
 
-@login_required(login_url="../users/login")
+@login_required(login_url="/users/login")
 def delete_meeting(request, meeting_id):
     try:
         meeting = Meeting.objects.get(id=meeting_id)

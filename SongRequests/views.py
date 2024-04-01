@@ -14,7 +14,7 @@ def index(request):
         "playlists": playlists
     })
 
-@login_required(login_url="../users/login")
+@login_required(login_url="/users/login")
 def add_song(request):
     if request.method == "POST":
         form = AddSongForm(request.POST)
@@ -78,7 +78,7 @@ def add_song_to_playlist(request, playlist_id):
     })
 
 
-@login_required(login_url="../users/login")
+@login_required(login_url="/users/login")
 def add_playlist(request):
     form = AddPlaylistForm(request.POST or None)
     if request.method == "POST" and form.is_valid():
@@ -100,7 +100,7 @@ def add_playlist(request):
             "form":form
     })
 
-@login_required(login_url="../users/login")
+@login_required(login_url="/users/login")
 def delete_song(request, playlist_id, song_id):
     try:
         song = Song.objects.get(pk=song_id)

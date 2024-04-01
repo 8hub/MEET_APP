@@ -11,6 +11,7 @@
     - [ ] delete `Meeting`
   - [ ] SongRequests
     - [ ] delete `Song`
+    - [ ] delete `Song` from `Playlist`
 
 ---
 #### UserApp app
