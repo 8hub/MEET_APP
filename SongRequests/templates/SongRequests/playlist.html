@@ -6,10 +6,11 @@
     <h3>{{playlist.title}}</h3>
     <ul>
         {% for song in playlist.songs.all %}
-            <li>{{ song.title }} - {{ song.artist }}</li>
-            {% if song.added_by == logged_in_user %}
+            <li>{{ song.title }} - {{ song.artist }}
+            {% if song.added_by == logged_in_user or logged_in_user == playlist.created_by %}
                 <a href="{% url 'SongRequests:remove_song_from_playlist' playlist.id song.id %}">Remove song</a>
             {% endif %}
+            </li>
         {% empty %}
             <li>No songs in the playlist.</li>
         {% endfor %}

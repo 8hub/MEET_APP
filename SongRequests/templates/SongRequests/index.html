@@ -5,20 +5,40 @@ Song requests
 
 
 {% block body %}
-<p>Here are the playlists:</p>
 {% if playlists %}
+<p>Playlists:</p>
     <ul class='playlist-list'>
         {% for playlist in playlists %}
             <li>
                 <a href="{% url 'SongRequests:playlist' playlist.id %}"> {{ playlist.title }}</a>
                 by {% if playlist.is_anonymous %} Anonymous {% else %} {{ playlist.created_by }} {% endif %}
+                {% if request.user == playlist.created_by %}
+                    <a href="{% url 'SongRequests:delete_playlist' playlist.id %}">Delete</a>
+                {% endif %}
             </li>
         {%endfor%}
     </ul>
 {% else %}
-<p> No playlists yet </p>
+<p>No playlists yet</p>
 {% endif %}
 
-<a href="{% url 'SongRequests:add_song' %}">Add a song</a>
 <a href="{% url 'SongRequests:add_playlist' %}">Add a playlist</a>
+<hr>
+{% if songs %}
+    <p>Songs:</p>
+    <ul class='song-list'>
+        {% for song in songs %}
+            <li>
+                {{ song.title }}
+                by {{ song.artist }}
+                {% if song.added_by == request.user %}
+                    <a href="{% url 'SongRequests:delete_song' song.id %}">Delete</a>
+                {% endif %}
+            </li>
+        {%endfor%}
+    </ul>
+{% else %}
+<p>No songs yet</p>
+{% endif %}
+<a href="{% url 'SongRequests:add_song' %}">Add a song</a>
 {% endblock body %}

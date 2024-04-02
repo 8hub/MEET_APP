@@ -17,17 +17,18 @@
 #### UserApp app
 - [ ] *Send email with verification during register**
 - [x] Handle is_valid if the password is to similar to username
-- [ ] After logging in redirect to MeetApp index.html
-- [ ] Focus cursor on 'username' when access 'login.index'
+- [x] After logging in redirect to MeetApp index.html
+- [x] Focus cursor on 'username' when access 'login.index'
 
 ---
 #### SongRequests app
 - [ ] views:
-  - [ ] After adding a `Song` to playlist refresh the form
+  - [x] Remove `Song` from `Playlist`
+  - [x] Delete `Playlist` (only if `User` is creator)
+  - [x] After adding a `Song` to playlist refresh the form
   - [ ] Just creator of `Playlist` can add a `Song`
   - [ ] Just creator of `Playlist` can delete a `Song`
-  - [x] Remove `Song` from `Playlist`
-  - [ ] Delete `Song`
+  - [ ] Delete `Song` (only if `User` added it)
 
 
 ---
@@ -37,6 +38,7 @@
   - [x] Click on `Meeting` on list and show the information
   - [x] Add a `User` to `Meeting`
   - [x] Delete `Meeting`
+  - [x] Just creator of `Meeting` can delete it
 - [ ] models:
   - [x] add a through relation between `Meeting` and `User`, so in M2M relation each `User` can be assigned do each `Meeting` just once
 

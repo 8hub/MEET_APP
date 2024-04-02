@@ -11,8 +11,10 @@ from django.shortcuts import get_object_or_404
 
 def index(request):
     playlists = Playlist.objects.all()
+    songs = Song.objects.all()
     return render(request, "SongRequests/index.html", {
-        "playlists": playlists
+        "playlists": playlists,
+        "songs": songs,
     })
 
 
@@ -100,6 +102,21 @@ def add_playlist(request):
     return render(request, "SongRequests/add_playlist.html",{
             "form":form
     })
+
+
+@login_required(login_url="/users/login")
+def delete_playlist(request, playlist_id):
+    try:
+        playlist = Playlist.objects.get(id=playlist_id)
+    except ObjectDoesNotExist:
+        messages.error(request, f"Playlist id {playlist_id} does not exist")
+        return HttpResponseRedirect(reverse("SongRequests:index"))
+    if playlist.created_by != request.user:
+        messages.error(request, "You can only delete playlist you added")
+        return HttpResponseRedirect(reverse("SongRequests:index"))
+    playlist.delete()
+    messages.info(request, "Playlist deleted succesfully")
+    return HttpResponseRedirect(reverse("SongRequests:index"))
 
 
 @login_required(login_url="/users/login")
