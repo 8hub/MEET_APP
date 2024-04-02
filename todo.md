@@ -26,7 +26,7 @@
   - [ ] After adding a `Song` to playlist refresh the form
   - [ ] Just creator of `Playlist` can add a `Song`
   - [ ] Just creator of `Playlist` can delete a `Song`
-  - [ ] Delete `Song` from `Playlist`
+  - [x] Remove `Song` from `Playlist`
   - [ ] Delete `Song`
 
 

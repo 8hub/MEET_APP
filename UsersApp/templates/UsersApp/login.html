@@ -3,7 +3,7 @@
 {% block users_body %}
     <form action="{% url 'UsersApp:login' %}" method="post">
         {% csrf_token %}
-        <input type="text" name="username" placeholder="Username">
+        <input type="text" name="username" placeholder="Username" autofocus>
         <input type="password" name="password" placeholder="Password">
         <input type="hidden" name="next" value="{{ next }}">
         <input type="submit" value="Login">

@@ -19,7 +19,6 @@ def index(request):
     
 def login_views(request):
     redirect_to = request.POST.get('next') or request.GET.get("next", "")
-
     if redirect_to == "/song_request/add_song":
         messages.info(request, "You have to log in to add a song")
 
@@ -29,9 +28,10 @@ def login_views(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
+            messages.info(request, "Logged in.")
             if redirect_to:
                 return HttpResponseRedirect(redirect_to)
-            return HttpResponseRedirect(reverse("UsersApp:index"))
+            return HttpResponseRedirect(reverse("MeetApp:index"))
         else:
             messages.error(request, "Invalid username and/or password.")
             return render(request, "UsersApp/login.html",{
