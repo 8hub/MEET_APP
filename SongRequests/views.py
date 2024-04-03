@@ -75,6 +75,9 @@ def add_song_to_playlist(request, playlist_id):
         except Exception as e:
             messages.error(request, f"An error occured: {str(e)}")
             return HttpResponseRedirect(reverse("SongRequests:playlist", args=(playlist_id,)))
+    if request.user != playlist.created_by:
+        messages.info(request, "Just creator can add songs")
+        return HttpResponseRedirect(reverse("SongRequests:playlist", args=(playlist_id,)))
     return render(request, "SongRequests/add_song_to_playlist.html", {
         "form": form,
         "playlist": playlist

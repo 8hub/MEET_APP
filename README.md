@@ -38,8 +38,18 @@ This app is responsible for creating and managing users. It contains the followi
 This app is responsible for creating and managing songs and playlists. It contains the following models:
 - `Song`
 - `Playlist`
-- `SongPlaylist` - *links the `Song` to `Playlist`*
+- `SongPlaylist` - *links the `Song` to `Playlist`* - adding the creation date
 
+Purpose:\
+`User` can add a `Song`s and `Playlist`s to the page and see what other `Users` added.
+
+Utility of specific `User`:
+* `User` can add a `Song` and `Playlist`
+* `User` that added a `Song` or `Playlist` is its *creator*
+* The *creator* of the `Song` can remove the `Song` from any `Playlist`
+* The *creator* of the `Playlist` can add and remove any `Song` from his `Playlist`
+* The *creator* of the `Playlist` can delete it
+* The *creator* of the `Song` can delete it
 ---
 # 2. models.py
 ## 2.1. MeetApp

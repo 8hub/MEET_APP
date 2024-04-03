@@ -27,3 +27,6 @@ class AddSongToPlaylistForm(forms.Form):
         playlist = Playlist.objects.get(pk=playlist_id)
         songs_in_playlist = [playlist_song.song for playlist_song in playlist.playlistsong_set.all()]
         self.fields['songs'].choices = [(song.id, str(song)) for song in Song.objects.all() if song not in songs_in_playlist]
+
+    def has_songs(self):
+        return bool(self.fields['songs'].choices)

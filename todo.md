@@ -11,7 +11,9 @@
     - [ ] delete `Meeting`
   - [ ] SongRequests
     - [ ] delete `Song`
-    - [ ] delete `Song` from `Playlist`
+    - [ ] delete `Song` from `Playlist` (if *creator*)
+    - [ ] delete added `Song` from not created `Playlist`
+    - [ ] delete `Playlist` (if *creator*)
 
 ---
 #### UserApp app
@@ -26,9 +28,9 @@
   - [x] Remove `Song` from `Playlist`
   - [x] Delete `Playlist` (only if `User` is creator)
   - [x] After adding a `Song` to playlist refresh the form
-  - [ ] Just creator of `Playlist` can add a `Song`
-  - [ ] Just creator of `Playlist` can delete a `Song`
-  - [ ] Delete `Song` (only if `User` added it)
+  - [x] Just creator of `Playlist` can add a `Song`
+  - [x] Creator of `Playlist` can remove a `Song`
+  - [x] Delete `Song` (only if `User` added it)
 
 
 ---

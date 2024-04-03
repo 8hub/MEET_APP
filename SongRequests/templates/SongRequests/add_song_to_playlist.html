@@ -3,9 +3,14 @@
 
 {% block body %}
     <h1>Add song to playlist</h1>
-    <form method="post" action="{% url 'SongRequests:add_song_to_playlist' playlist.id %}">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Add song">
-    </form>
+    {% if form.has_songs %}
+        <form method="post" action="{% url 'SongRequests:add_song_to_playlist' playlist.id %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Add song">
+        </form>
+    {% else %}
+        <p>There are no songs to add to the playlist.</p>
+    {% endif %}
+    <a href="{% url 'SongRequests:playlist' playlist.id %}">Back to playlist</a>
 {% endblock body %}
