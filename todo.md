@@ -31,6 +31,7 @@
   - [x] Just creator of `Playlist` can add a `Song`
   - [x] Creator of `Playlist` can remove a `Song`
   - [x] Delete `Song` (only if `User` added it)
+  - [x] Add a view of `Song` details
 
 
 ---

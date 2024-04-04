@@ -17,6 +17,15 @@ def index(request):
         "songs": songs,
     })
 
+def song_details(request, song_id):
+    try:
+        song = Song.objects.get(id=song_id)
+    except ObjectDoesNotExist:
+        messages.error(request, f"Song id: {song_id} does not exist")
+        return HttpResponseRedirect(reverse("SongRequests:index"))
+    return render(request, "SongRequests/song.html", {
+        "song": song
+    })
 
 @login_required(login_url="/users/login")
 def add_song(request):

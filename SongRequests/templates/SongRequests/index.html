@@ -29,7 +29,9 @@ Song requests
     <ul class='song-list'>
         {% for song in songs %}
             <li>
+                <a href="{% url 'SongRequests:song_details' song.id %}">
                 {{ song.title }}
+                </a>
                 by {{ song.artist }}
                 {% if song.added_by == request.user %}
                     <a href="{% url 'SongRequests:delete_song' song.id %}">Delete</a>

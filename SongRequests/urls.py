@@ -4,6 +4,7 @@ from . import views
 app_name = "SongRequests"
 urlpatterns = [
     path("", views.index, name="index"),
+    path("song/<int:song_id>", views.song_details, name="song_details"),
     path("song/<int:song_id>/delete", views.delete_song, name="delete_song"),
     path("add_song", views.add_song, name="add_song"),
     path("add_playlist", views.add_playlist, name="add_playlist"),

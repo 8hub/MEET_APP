@@ -1,0 +1,36 @@
+{% extends "main_layout.html" %}
+{% block title %}Song{% endblock title %}
+
+{% block body %}
+    <article>
+        <h1>{{ song.title }}</h1>
+        <table>
+            <tr>
+                <td>
+                    <i>by</i>
+                </td>
+                <td>
+        <h3>{{ song.artist }}</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <i>url</i>
+                </td>
+                <td>
+        <h3>{{ song.url_field }}</h3>
+                </td>
+                <tr>
+                    <td>
+                        <i>added by:</i>
+                    </td>
+                    <td>
+        <h3>{{ song.added_by }}</h3>
+                    </td>
+        </table>
+    </article>
+    <a href="{% url 'SongRequests:index' %}">Back</a>
+    {% if request.user == song.added_by %}
+    <a href="{% url 'SongRequests:delete_song' song.id %}">Delete</a>
+    {% endif %}
+{% endblock body %}
