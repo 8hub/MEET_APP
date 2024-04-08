@@ -17,11 +17,15 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 from decouple import Config, RepositoryEnv
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-secret_config = Config(RepositoryEnv(BASE_DIR / "secret_config.env"))
+SECRET_KEY = config('DJANGO_SECRET_KEY', default=None)
+if SECRET_KEY is None:
+    secret_config = Config(RepositoryEnv(BASE_DIR / "secret_config.env"))
+    SECRET_KEY = secret_config("DJANGO_SECRET_KEY")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
