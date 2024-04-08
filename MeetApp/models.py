@@ -41,7 +41,7 @@ class Meeting(models.Model):
     def get_participant_by_email(self, email):
         return self.participants.get(email=email)
     
-    def add_participant(self, user):
+    def add_user(self, user):
         self.participants.add(user)
     
     def remove_user(self, user):
@@ -53,7 +53,7 @@ class Meeting(models.Model):
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
         if self.creator not in self.participants.all():
-            self.add_participant(self.creator)
+            self.add_user(self.creator)
 
 
 class MeetingParticipant(models.Model):

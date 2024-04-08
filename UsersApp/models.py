@@ -18,13 +18,13 @@ class CustomUserManager(BaseUserManager):
         try:
             validate_email(email)
         except ValidationError:
-            raise ValueError("Invalid email address")
+            raise ValidationError("Invalid email address")
         
         try:
             validate_password(password, user=user)
             user.set_password(password)
         except ValidationError as e:
-            raise ValueError(e)
+            raise ValidationError(e)
         user.save(using=self._db)
         return user
 

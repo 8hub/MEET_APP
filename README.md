@@ -164,15 +164,24 @@ Testing `models.py` cannot be done using VSCode *Test Explorer* without importin
   - logged in `User` can add a `Song`
   - if `User` want to add a `Song` and is not logged in redirect to `UserApp/login.html`
 - test_models.py
-  - test creation of `Song` with all required fields
-  - test creation of `Song` without title
-  - test creation of `Song` without artist and URL
-  - test creation of `Playlist` with all required fields
-  - test creation of `Playlist` without title
-  - test creation of `Playlist` with the same title
-  - test adding `Song` to existing `Playlist`
-  - test creation of `Playlist` 
-  - create a `Song`
+  - test `Song`:
+    - test creation of `Song`:
+      - with all required fields
+      - without title
+      - without artist and URL
+    - test deletion of `Song`
+  - test `Playlist`:
+    - test creation of `Playlist`:
+      - with all required fields
+      - without title
+      - with the same title
+    - test deletion of `Playlist`
+  - test `PlaylistSong`:
+    - test adding `Song` to existing `Playlist`
+    - test breaking the link between `Song` and `Playlist`:
+      - when `Song` is deleted
+      - when `Playlist` is deleted 
+
 ### 3.1.3. UsersApp
 - test_views.py
   - test index view
