@@ -129,12 +129,14 @@ def save(self, *args, **kwargs):
 # 3. tests
 
 ## 3.1. unit tests
-To each app directory was added *test* folder in which are placed tests:
+In each app directory there is *test* folder in which are:
 - test_views.py
 - test_models.py
 - test_templates.py
 
-`from django.test import TestCase` is not supported by `unittest`, so `pytest-django` have to be installed to run tests in *VSCode Test Explorer*.
+All unit test are checked with build in django test framework.\
+The `TestCase` from `django.test` is used to run tests.\
+For more efficient testing the `pytest-django` was added to the project, because `TestCase` is not supported by `unittest`. With that configuration tests can be run directly with one click in *VSCode Test Explorer*.
 
 To enable running tests in VSCode the `pytest.ini` had to be configured:
 ```ini
@@ -143,7 +145,14 @@ DJANGO_SETTINGS_MODULE = MEET_APP.settings
 python_files = tests.py test_*.py *_tests.py
 ```
 
-Testing `models.py` cannot be done using VSCode *Test Explorer* without importing models inside each `test_method()`. Because of that, to stick with maintainability of the code, each `test_models.py` file will be run through **django-test framework**.
+To enable testing `models.py` using *VSCode Test Explorer* there has to be done direct environment setup in each `test_models.py`.
+```python
+import os
+from django import setup
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "MEET_APP.settings")
+setup()
+```
+ importing models inside each `test_<model>()` method. Because of that, to stick with maintainability of the code, each `test_models.py` file has to be run directly through **django-test framework**.
 
 ### 3.1.1. MeetApp
 - test_views.py

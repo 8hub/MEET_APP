@@ -58,6 +58,7 @@ def register(request):
             password = form.cleaned_data["password"]
             user = User_model.objects.create_user(username, email, password)
             login(request, user)
+            messages.info(request, "Logged in.")
             return HttpResponseRedirect(reverse("UsersApp:index"))
         else:
             return render(request, "UsersApp/register.html", {

@@ -29,10 +29,11 @@ class UserTest(LiveServerTestCase):
 
     def test_user_login(self):
         self.login()
-        self.assertIn("You are logged in", self.browser.page_source)
+        self.assertIn("Logged in", self.browser.page_source)
 
     def test_user_logout(self):
         self.login()
+        self.browser.find_element(By.LINK_TEXT, "UsersApp").click()
         self.browser.find_element(By.LINK_TEXT, "Logout").click()
         self.assertIn("Logged out", self.browser.page_source)
 
@@ -43,4 +44,4 @@ class UserTest(LiveServerTestCase):
         self.browser.find_element(By.CSS_SELECTOR, "input[name='password']").send_keys("n3wPas5word")
         self.browser.find_element(By.CSS_SELECTOR, "input[name='password_confirm']").send_keys("n3wPas5word")
         self.browser.find_element(By.CSS_SELECTOR, "input[type='submit']").click()
-        self.assertIn("You are logged in", self.browser.page_source)
+        self.assertIn("Logged in", self.browser.page_source)

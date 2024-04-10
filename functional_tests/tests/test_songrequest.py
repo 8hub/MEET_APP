@@ -70,7 +70,7 @@ class SongTest(FunctionalBaseTest):
         self.browser.find_element(By.LINK_TEXT, "Test Playlist").click()
         self.assertIn("Test Song 1 - Test Artist 1", self.browser.page_source)
         self.assertIn("Test Song 3 - Test Artist 3", self.browser.page_source)
-        self.browser.find_element(By.LINK_TEXT, "Add a song").click()
+        self.browser.find_element(By.LINK_TEXT, "Add a song to playlist").click()
         self.mark_song_to_add("2")
         self.browser.find_element(By.CSS_SELECTOR, "input[type='submit']").click()
         self.assertEqual(Playlist.objects.first().songs.count(), 3)
