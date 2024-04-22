@@ -1,10 +1,11 @@
-from django.urls import path
-from . import views
+from django.urls import path, include
+from MeetApp import views
+from rest_framework.routers import DefaultRouter
+
+router = DefaultRouter()
+router.register(r"meetings", views.MeetingViewSet, basename="meeting")
 
 app_name = "MeetApp"
 urlpatterns = [
-    path("", views.index, name="index"),
-    path("create_meeting/", views.create_meeting, name="create_meeting"),
-    path("meeting/<int:meeting_id>/", views.meeting_details, name="meeting_details"),
-    path("meeting/<int:meeting_id>/delete/", views.delete_meeting, name="delete_meeting"),
+    path("", include(router.urls)),
 ] 
