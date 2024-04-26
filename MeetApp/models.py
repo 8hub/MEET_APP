@@ -42,7 +42,8 @@ class Meeting(models.Model):
         return self.participants.get(email=email)
     
     def add_user(self, user):
-        self.participants.add(user)
+        if user not in self.participants.all():
+            self.participants.add(user)
     
     def remove_user(self, user):
         self.participants.remove(user)
