@@ -1,71 +1,67 @@
-from django.contrib.auth import authenticate, login, logout, get_user_model
-from django.core.validators import validate_email
-from django.core.exceptions import ValidationError
-from django.shortcuts import render
-from django.http import HttpResponseRedirect
-from django.urls import reverse
-from django.contrib import messages
-from .forms import NewUserForm
+from django.contrib.auth import authenticate
+from rest_framework import status, views
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.response import Response
+from rest_framework_simplejwt.tokens import RefreshToken
 
-User_model = get_user_model()
+from .serializers import UserSerializer
 
-def index(request):
-    if not request.user.is_authenticated:
-        return login_views(request)
-    else:
-        return render(request, "UsersApp/index.html", {
-            "user": request.user
-        })
-    
-def login_views(request):
-    redirect_to = request.POST.get('next') or request.GET.get("next", "")
-    if redirect_to == "/song_request/add_song":
-        messages.info(request, "You have to log in to add a song")
+class RegisterView(views.APIView):
+    permission_classes = [AllowAny]
 
-    if request.method == "POST":
-        username = request.POST["username"]
-        password = request.POST["password"]
-        user = authenticate(request, username=username, password=password)
+    def post(self, request):
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            user = serializer.save()
+            refresh = RefreshToken.for_user(user)
+            return Response({
+                'refresh': str(refresh),
+                'access': str(refresh.access_token),
+            }, status=status.HTTP_201_CREATED)
+                # Handling specific errors with custom status codes
+        errors = serializer.errors
+        if 'email' in errors:
+            # For invalid email errors
+            return Response({'error': errors['email']}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+        elif 'password' in errors:
+            # For password validation errors
+            return Response({'error': errors['password']}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+        
+        # Default response for other validation errors
+        return Response(errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class LoginView(views.APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        username = request.data.get('username')
+        password = request.data.get('password')
+        user = authenticate(username=username, password=password)
         if user is not None:
-            login(request, user)
-            messages.info(request, "Logged in.")
-            if redirect_to:
-                return HttpResponseRedirect(redirect_to)
-            return HttpResponseRedirect(reverse("MeetApp:index"))
-        else:
-            messages.error(request, "Invalid username and/or password.")
-            return render(request, "UsersApp/login.html",{
-                "next": redirect_to
+            refresh = RefreshToken.for_user(user)
+            return Response({
+                'refresh': str(refresh),
+                'access': str(refresh.access_token),
             })
-            
-    return render(request, "UsersApp/login.html", {
-        "next": redirect_to
-    })
+        return Response({'error': 'Invalid Credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
-def logout_views(request):
-    logout(request)
-    messages.info(request, "Logged out.")
-    return render(request, "UsersApp/login.html")
+class LogoutView(views.APIView):
+    permission_classes = [IsAuthenticated]
 
+    def post(self, request):
+        try:
+            refresh_token = request.data.get('refresh')
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+            return Response(status=status.HTTP_205_RESET_CONTENT)
+        except Exception as e:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
 
-def register(request):
-    if request.method == "POST":
-        form = NewUserForm(request.POST)
-        # validate all fields - important
-        if form.is_valid():
-            username = form.cleaned_data["username"]
-            email = form.cleaned_data["email"]
-            password = form.cleaned_data["password"]
-            user = User_model.objects.create_user(username, email, password)
-            login(request, user)
-            messages.info(request, "Logged in.")
-            return HttpResponseRedirect(reverse("UsersApp:index"))
-        else:
-            return render(request, "UsersApp/register.html", {
-                "form": form
-            })
-    else:
-        form = NewUserForm()
-        return render(request, "UsersApp/register.html", {
-            "form": form
-        })
+class UserDetailView(views.APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        serializer = UserSerializer(user)
+        return Response(serializer.data)

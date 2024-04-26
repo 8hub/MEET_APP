@@ -12,7 +12,7 @@ from bs4 import BeautifulSoup
 from django.test import LiveServerTestCase
 from django.contrib.auth import get_user_model
 from django.urls import reverse
-from SongRequests.models import Playlist
+from SongApp.models import Playlist
 from test_utils import FunctionalBaseTest
 
 User = get_user_model()
@@ -50,7 +50,7 @@ class SongTest(FunctionalBaseTest):
         for i in range(1, 6):
             self.add_song(f"Test Song {i}", f"Test Artist {i}", f"https://www.youtube.com/watch?v={i}")
 
-        self.browser.get(self.live_server_url + reverse("SongRequests:add_playlist"))
+        self.browser.get(self.live_server_url + reverse("SongApp:add_playlist"))
         self.browser.find_element(By.CSS_SELECTOR, "input[name='title']").send_keys("Test Playlist")
 
         self.mark_song_to_add("1")
@@ -66,7 +66,7 @@ class SongTest(FunctionalBaseTest):
         self.assertIn("Test Playlist", playlist_list.text)
         self.assertIn("testuser", playlist_list.text)
         
-        self.browser.get(self.live_server_url + reverse("SongRequests:index"))
+        self.browser.get(self.live_server_url + reverse("SongApp:index"))
         self.browser.find_element(By.LINK_TEXT, "Test Playlist").click()
         self.assertIn("Test Song 1 - Test Artist 1", self.browser.page_source)
         self.assertIn("Test Song 3 - Test Artist 3", self.browser.page_source)

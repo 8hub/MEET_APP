@@ -29,8 +29,8 @@
                     </td>
         </table>
     </article>
-    <a href="{% url 'SongRequests:index' %}">Back</a>
+    <a href="{% url 'SongApp:index' %}">Back</a>
     {% if request.user == song.added_by %}
-    <a href="{% url 'SongRequests:delete_song' song.id %}">Delete</a>
+    <a href="{% url 'SongApp:delete_song' song.id %}">Delete</a>
     {% endif %}
 {% endblock body %}

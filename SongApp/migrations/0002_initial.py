@@ -10,7 +10,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ("SongRequests", "0001_initial"),
+        ("SongApp", "0001_initial"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
@@ -30,7 +30,7 @@ class Migration(migrations.Migration):
             model_name="playlistsong",
             name="playlist",
             field=models.ForeignKey(
-                on_delete=django.db.models.deletion.CASCADE, to="SongRequests.playlist"
+                on_delete=django.db.models.deletion.CASCADE, to="SongApp.playlist"
             ),
         ),
         migrations.AddField(
@@ -47,7 +47,7 @@ class Migration(migrations.Migration):
             model_name="playlistsong",
             name="song",
             field=models.ForeignKey(
-                on_delete=django.db.models.deletion.CASCADE, to="SongRequests.song"
+                on_delete=django.db.models.deletion.CASCADE, to="SongApp.song"
             ),
         ),
         migrations.AddField(
@@ -56,8 +56,8 @@ class Migration(migrations.Migration):
             field=models.ManyToManyField(
                 blank=True,
                 related_name="parent_playlists",
-                through="SongRequests.PlaylistSong",
-                to="SongRequests.song",
+                through="SongApp.PlaylistSong",
+                to="SongApp.song",
             ),
         ),
         migrations.AlterUniqueTogether(

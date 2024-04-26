@@ -2,14 +2,14 @@
 - [ ] Add functional tests
   - [x] UserApp
   - [x] MeetApp
-  - [ ] SongRequests
+  - [ ] SongApp
     - [x] Login -> go to `Playlist` -> add a `Song`
     - [x] Login -> Add a `Song` to existing `Playlist`
 - [ ] Add unit tests
   - [x] UserApp
   - [x] MeetApp
     - [ ] delete `Meeting`
-  - [ ] SongRequests
+  - [ ] SongApp
     - [ ] delete `Song`
     - [ ] delete `Song` from `Playlist` (if *creator*)
     - [ ] delete added `Song` from not created `Playlist`
@@ -23,7 +23,7 @@
 - [x] Focus cursor on 'username' when access 'login.index'
 
 ---
-#### SongRequests app
+#### SongApp app
 - [ ] views:
   - [x] Remove `Song` from `Playlist`
   - [x] Delete `Playlist` (only if `User` is creator)

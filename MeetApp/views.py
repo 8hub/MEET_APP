@@ -1,9 +1,6 @@
-from django.shortcuts import render
-from django.urls import reverse
 from MeetApp.serializers import MeetingSerializer
 from UsersApp.serializers import UserSerializer
-from MeetApp.forms import MeetingForm
-from MeetApp.models import Meeting, MeetingParticipant
+from MeetApp.models import Meeting
 from django.contrib.auth import get_user_model
 from rest_framework import viewsets
 from rest_framework.decorators import action

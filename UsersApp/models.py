@@ -1,5 +1,4 @@
 from django.contrib.auth.models import AbstractUser, BaseUserManager
-from django.db import models
 from django.contrib.auth.password_validation import validate_password
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError

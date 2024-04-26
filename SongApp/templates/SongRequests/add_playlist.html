@@ -3,10 +3,10 @@
 
 {% block body %}
 <h1>Add playlist</h1>
-<form action="{% url 'SongRequests:add_playlist' %}" method="post">
+<form action="{% url 'SongApp:add_playlist' %}" method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Add playlist">
 </form>
-<a href="{% url 'SongRequests:index' %}">Back</a>
+<a href="{% url 'SongApp:index' %}">Back</a>
 {% endblock body %}

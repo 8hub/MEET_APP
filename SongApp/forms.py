@@ -1,5 +1,5 @@
 from django import forms
-from SongRequests.models import Song, Playlist
+from SongApp.models import Song, Playlist
 
 class AddSongForm(forms.Form):
     # required

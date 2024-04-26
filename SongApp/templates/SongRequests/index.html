@@ -10,10 +10,10 @@ Song requests
     <ul class='playlist-list'>
         {% for playlist in playlists %}
             <li>
-                <a href="{% url 'SongRequests:playlist' playlist.id %}"> {{ playlist.title }}</a>
+                <a href="{% url 'SongApp:playlist' playlist.id %}"> {{ playlist.title }}</a>
                 by {% if playlist.is_anonymous %} Anonymous {% else %} {{ playlist.created_by }} {% endif %}
                 {% if request.user == playlist.created_by %}
-                    <a href="{% url 'SongRequests:delete_playlist' playlist.id %}">Delete</a>
+                    <a href="{% url 'SongApp:delete_playlist' playlist.id %}">Delete</a>
                 {% endif %}
             </li>
         {%endfor%}
@@ -22,19 +22,19 @@ Song requests
 <p>No playlists yet</p>
 {% endif %}
 
-<a href="{% url 'SongRequests:add_playlist' %}">Add a playlist</a>
+<a href="{% url 'SongApp:add_playlist' %}">Add a playlist</a>
 <hr>
 {% if songs %}
     <p>Songs:</p>
     <ul class='song-list'>
         {% for song in songs %}
             <li>
-                <a href="{% url 'SongRequests:song_details' song.id %}">
+                <a href="{% url 'SongApp:song_details' song.id %}">
                 {{ song.title }}
                 </a>
                 by {{ song.artist }}
                 {% if song.added_by == request.user %}
-                    <a href="{% url 'SongRequests:delete_song' song.id %}">Delete</a>
+                    <a href="{% url 'SongApp:delete_song' song.id %}">Delete</a>
                 {% endif %}
             </li>
         {%endfor%}
@@ -42,5 +42,5 @@ Song requests
 {% else %}
 <p>No songs yet</p>
 {% endif %}
-<a href="{% url 'SongRequests:add_song' %}">Add a song</a>
+<a href="{% url 'SongApp:add_song' %}">Add a song</a>
 {% endblock body %}

@@ -1,6 +1,6 @@
 from django.db import IntegrityError
 from django.test import TestCase
-from SongRequests.models import Song, Playlist, PlaylistSong
+from SongApp.models import Song, Playlist, PlaylistSong
 
 class SongModelTest(TestCase):
     def test_model_with_correct_data(self):

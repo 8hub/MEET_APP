@@ -22,7 +22,7 @@ class TopBarLinksTest(LiveServerTestCase):
         links = top_bar.find_elements(By.TAG_NAME, 'a')
         link_texts = [link.text for link in links]
 
-        self.assertEqual(link_texts, ["MeetApp", "SongRequests", "UsersApp"], "The top-bar links text did not match the expected values")
+        self.assertEqual(link_texts, ["MeetApp", "SongApp", "UsersApp"], "The top-bar links text did not match the expected values")
     
 
     def test_title_and_header(self):
