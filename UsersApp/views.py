@@ -18,16 +18,15 @@ class RegisterView(views.APIView):
                 'refresh': str(refresh),
                 'access': str(refresh.access_token),
             }, status=status.HTTP_201_CREATED)
-                # Handling specific errors with custom status codes
+
         errors = serializer.errors
+        # invalid email
         if 'email' in errors:
-            # For invalid email errors
             return Response({'error': errors['email']}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+        # invalid password - to common/ weak/ short/ similar to username
         elif 'password' in errors:
-            # For password validation errors
             return Response({'error': errors['password']}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
-        
-        # Default response for other validation errors
+
         return Response(errors, status=status.HTTP_400_BAD_REQUEST)
 
 
