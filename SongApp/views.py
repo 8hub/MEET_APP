@@ -1,25 +1,25 @@
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
-from django.http import HttpResponseRedirect
-from django.urls import reverse
-from django.contrib import messages
-from .models import Playlist, Song, PlaylistSong
-from .forms import AddSongForm, AddPlaylistForm, AddSongToPlaylistForm
+from SongApp.models import Playlist, Song
 from django.core.exceptions import ObjectDoesNotExist
-from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import status
 from .serializers import PlaylistSerializer, SongSerializer
+from SongApp.permissions import IsPlaylistCreator, IsSongOwner
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 class SongViewSet(viewsets.ModelViewSet):
     queryset = Song.objects.all()
     serializer_class = SongSerializer
+    permission_classes = [IsSongOwner]
+    authentication_classes = [JWTAuthentication]
 
-    @action(detail=True, methods=['get'])
+    @action(detail=True, methods=['get'], permission_classes=[], authentication_classes=[])
     def get_playlists(self, request, pk=None):
-        song = self.get_object()
+        try:
+            song = self.get_object()
+        except ObjectDoesNotExist:
+            return Response({"error": "Song does not exist"}, status=status.HTTP_404_NOT_FOUND)
         playlists = song.get_playlists()
         return Response(PlaylistSerializer(playlists, many=True).data)
     
@@ -80,9 +80,11 @@ class SongViewSet(viewsets.ModelViewSet):
     
 class PlaylistViewSet(viewsets.ModelViewSet):
     queryset = Playlist.objects.all()
-    serializer_class = PlaylistSerializer   
+    serializer_class = PlaylistSerializer
+    permission_classes = [IsPlaylistCreator]
+    authentication_classes = [JWTAuthentication]
 
-    @action(detail=True, methods=['get'])
+    @action(detail=True, methods=['get'], permission_classes=[], authentication_classes=[])
     def get_songs(self, request, pk=None):
         playlist = self.get_object()
         songs = playlist.songs.all()
