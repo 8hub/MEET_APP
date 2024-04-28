@@ -15,6 +15,27 @@
   - [`POST /login/`](#post-login)
   - [`POST /logout/`](#post-logout)
   - [`GET /user/`](#get-user)
+- [SongApp API](#songapp-api)
+  - [`GET /songs/`](#get-songs)
+  - [`POST /songs/`](#post-songs)
+  - [`GET /songs/{id}/`](#get-songsid)
+  - [`PUT /songs/{id}/`](#put-songsid)
+  - [`DELETE /songs/{id}/`](#delete-songsid)
+  - [`GET /songs/{id}/get_playlists/`](#get-songsidget_playlists)
+  - [`POST /songs/{id}/add_to_playlist/`](#post-songsidadd_to_playlist)
+  - [`POST /songs/{id}/remove_from_playlist/`](#post-songsidremove_from_playlist)
+  - [`PUT /songs/{id}/update_artist/`](#put-songsidupdate_artist)
+  - [`PUT /songs/{id}/update_title/`](#put-songsidupdate_title)
+  - [`PUT /songs/{id}/update_url/`](#put-songsidupdate_url)
+  - [`GET /playlists/`](#get-playlists)
+  - [`POST /playlists/`](#post-playlists)
+  - [`GET /playlists/{id}/`](#get-playlistsid)
+  - [`PUT /playlists/{id}/`](#put-playlistsid)
+  - [`DELETE /playlists/{id}/`](#delete-playlistsid)
+  - [`GET /playlists/{id}/get_songs/`](#get-playlistsidget_songs)
+  - [`POST /playlists/{id}/add_songs/`](#post-playlistsidadd_songs)
+  - [`POST /playlists/{id}/remove_songs/`](#post-playlistsidremove_songs)
+  - [`PUT /playlists/{id}/update_title/`](#put-playlistsidupdate_title)
 ## API documentation
 The app is devided into 3 apps:
 1. `MeetApp` - API  for sending and receiving info about meetings
@@ -87,3 +108,88 @@ The app is devided into 3 apps:
 ### `GET /user/`
 - Returns the details of the authenticated user.
 - Response status: 200 OK
+
+## SongApp API
+***`Song` model views***
+### `GET /songs/`
+- Lists all songs.
+- No authentication or permissions required.
+
+### `POST /songs/`
+- Creates a new song.
+- Requires authentication and the user must be the owner of the song.
+
+### `GET /songs/{id}/`
+- Retrieves a specific song by its ID.
+- No authentication or permissions required.
+
+### `PUT /songs/{id}/`
+- Updates a specific song.
+- Requires authentication and the user must be the owner of the song.
+
+### `DELETE /songs/{id}/`
+- Deletes a specific song.
+- Requires authentication and the user must be the owner of the song.
+
+### `GET /songs/{id}/get_playlists/`
+- Retrieves all playlists that a specific song is part of.
+- No authentication or permissions required.
+
+### `POST /songs/{id}/add_to_playlist/`
+- Adds a specific song to a playlist.
+- Requires authentication and the user must be the owner of the song.
+
+### `POST /songs/{id}/remove_from_playlist/`
+- Removes a specific song from a playlist.
+- Requires authentication and the user must be the owner of the song.
+
+### `PUT /songs/{id}/update_artist/`
+- Updates the artist of a specific song.
+- Requires authentication and the user must be the owner of the song.
+
+### `PUT /songs/{id}/update_title/`
+- Updates the title of a specific song.
+- Requires authentication and the user must be the owner of the song.
+
+### `PUT /songs/{id}/update_url/`
+- Updates the URL of a specific song.
+- Requires authentication and the user must be the owner of the song.
+
+---
+***`Playlist` model views***
+
+### `GET /playlists/`
+- Lists all playlists.
+- No authentication or permissions required.
+
+### `POST /playlists/`
+- Creates a new playlist.
+- Requires authentication and the user must be the creator of the playlist.
+
+### `GET /playlists/{id}/`
+- Retrieves a specific playlist by its ID.
+- No authentication or permissions required.
+
+### `PUT /playlists/{id}/`
+- Updates a specific playlist.
+- Requires authentication and the user must be the creator of the playlist.
+
+### `DELETE /playlists/{id}/`
+- Deletes a specific playlist.
+- Requires authentication and the user must be the creator of the playlist.
+
+### `GET /playlists/{id}/get_songs/`
+- Retrieves all songs in a specific playlist.
+- No authentication or permissions required.
+
+### `POST /playlists/{id}/add_songs/`
+- Adds songs to a specific playlist.
+- Requires authentication and the user must be the creator of the playlist.
+
+### `POST /playlists/{id}/remove_songs/`
+- Removes songs from a specific playlist.
+- Requires authentication and the user must be the creator of the playlist.
+
+### `PUT /playlists/{id}/update_title/`
+- Updates the title of a specific playlist.
+- Requires authentication and the user must be the creator of the playlist.

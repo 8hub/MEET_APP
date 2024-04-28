@@ -14,24 +14,39 @@ class SongViewSet(viewsets.ModelViewSet):
     permission_classes = [IsSongOwner]
     authentication_classes = [JWTAuthentication]
 
+    def get_permissions(self):
+        if self.action == 'list' or self.action == 'retrieve':
+            self.permission_classes = []
+            self.authentication_classes = []
+        return super().get_permissions()
+
+    def get_authentication_classes(self):
+        if self.action == 'list' or self.action == 'retrieve':
+            self.permission_classes = []
+            self.authentication_classes = []
+        return super().get_authentication_classes()
+    
     @action(detail=True, methods=['get'], permission_classes=[], authentication_classes=[])
     def get_playlists(self, request, pk=None):
         try:
             song = self.get_object()
         except ObjectDoesNotExist:
             return Response({"error": "Song does not exist"}, status=status.HTTP_404_NOT_FOUND)
-        playlists = song.get_playlists()
+        playlists = song.parent_playlists.all()
         return Response(PlaylistSerializer(playlists, many=True).data)
     
     @action(detail=True, methods=['post'])
     def add_to_playlist(self, request, pk=None):
-        song = self.get_object()
+        try:
+            song = self.get_object()
+        except ObjectDoesNotExist:
+            return Response({"error": "Song does not exist"}, status=status.HTTP_404_NOT_FOUND)
+
         playlist_id = request.data.get('playlist_id')
         try:
             playlist = Playlist.objects.get(id=playlist_id)
             playlist.add_songs([song.id])
-            playlists = song.get_playlists()
-            return Response(PlaylistSerializer(playlists, many=True).data, status=status.HTTP_201_CREATED)
+            return Response(PlaylistSerializer(playlist).data, status=status.HTTP_201_CREATED)
         except ObjectDoesNotExist:
             return Response({"error": "Playlist does not exist"}, status=status.HTTP_404_NOT_FOUND)
 
@@ -42,8 +57,7 @@ class SongViewSet(viewsets.ModelViewSet):
         try:
             playlist = Playlist.objects.get(id=playlist_id)
             playlist.remove_songs([song.id])
-            playlists = song.get_playlists()
-            return Response(PlaylistSerializer(playlists, many=True).data, status=status.HTTP_200_OK)
+            return Response(PlaylistSerializer(playlist).data, status=status.HTTP_200_OK)
         except ObjectDoesNotExist:
             return Response({"error": "Playlist does not exist"}, status=status.HTTP_404_NOT_FOUND)
 
@@ -84,6 +98,18 @@ class PlaylistViewSet(viewsets.ModelViewSet):
     permission_classes = [IsPlaylistCreator]
     authentication_classes = [JWTAuthentication]
 
+    def get_permissions(self):
+        if self.action == 'list' or self.action == 'retrieve':
+            self.permission_classes = []
+            self.authentication_classes = []
+        return super().get_permissions()
+    
+    def get_authentication_classes(self):
+        if self.action == 'list' or self.action == 'retrieve':
+            self.permission_classes = []
+            self.authentication_classes = []
+        return super().get_authentication_classes()
+    
     @action(detail=True, methods=['get'], permission_classes=[], authentication_classes=[])
     def get_songs(self, request, pk=None):
         playlist = self.get_object()
