@@ -1,42 +1,45 @@
-- [API documentation](#api-documentation)
-- [MeetingViewSet API Endpoints](#meetingviewset-api-endpoints)
-  - [`GET /meetings/`](#get-meetings)
-  - [`GET /meetings/{id}/`](#get-meetingsid)
-  - [`POST /meetings/`](#post-meetings)
-  - [`PUT /meetings/{id}/`](#put-meetingsid)
-  - [`DELETE /meetings/{id}/`](#delete-meetingsid)
-  - [`POST /meetings/{id}/add_participant/`](#post-meetingsidadd_participant)
-  - [`POST /meetings/{id}/remove_participant/`](#post-meetingsidremove_participant)
-  - [`POST /meetings/{id}/clear_participants/`](#post-meetingsidclear_participants)
-  - [`GET /meetings/{id}/get_participants/`](#get-meetingsidget_participants)
-  - [`GET /meetings/{id}/get_participant_ids/`](#get-meetingsidget_participant_ids)
-- [User API Endpoints](#user-api-endpoints)
-  - [`POST /register/`](#post-register)
-  - [`POST /login/`](#post-login)
-  - [`POST /logout/`](#post-logout)
-  - [`GET /user/`](#get-user)
-- [SongApp API](#songapp-api)
-  - [`GET /songs/`](#get-songs)
-  - [`POST /songs/`](#post-songs)
-  - [`GET /songs/{id}/`](#get-songsid)
-  - [`PUT /songs/{id}/`](#put-songsid)
-  - [`DELETE /songs/{id}/`](#delete-songsid)
-  - [`GET /songs/{id}/get_playlists/`](#get-songsidget_playlists)
-  - [`POST /songs/{id}/add_to_playlist/`](#post-songsidadd_to_playlist)
-  - [`POST /songs/{id}/remove_from_playlist/`](#post-songsidremove_from_playlist)
-  - [`PUT /songs/{id}/update_artist/`](#put-songsidupdate_artist)
-  - [`PUT /songs/{id}/update_title/`](#put-songsidupdate_title)
-  - [`PUT /songs/{id}/update_url/`](#put-songsidupdate_url)
-  - [`GET /playlists/`](#get-playlists)
-  - [`POST /playlists/`](#post-playlists)
-  - [`GET /playlists/{id}/`](#get-playlistsid)
-  - [`PUT /playlists/{id}/`](#put-playlistsid)
-  - [`DELETE /playlists/{id}/`](#delete-playlistsid)
-  - [`GET /playlists/{id}/get_songs/`](#get-playlistsidget_songs)
-  - [`POST /playlists/{id}/add_songs/`](#post-playlistsidadd_songs)
-  - [`POST /playlists/{id}/remove_songs/`](#post-playlistsidremove_songs)
-  - [`PUT /playlists/{id}/update_title/`](#put-playlistsidupdate_title)
-## API documentation
+- [API documentation - Backend](#api-documentation---backend)
+  - [MeetingViewSet API Endpoints](#meetingviewset-api-endpoints)
+    - [`GET /meetings/`](#get-meetings)
+    - [`GET /meetings/{id}/`](#get-meetingsid)
+    - [`POST /meetings/`](#post-meetings)
+    - [`PUT /meetings/{id}/`](#put-meetingsid)
+    - [`DELETE /meetings/{id}/`](#delete-meetingsid)
+    - [`POST /meetings/{id}/add_participant/`](#post-meetingsidadd_participant)
+    - [`POST /meetings/{id}/remove_participant/`](#post-meetingsidremove_participant)
+    - [`POST /meetings/{id}/clear_participants/`](#post-meetingsidclear_participants)
+    - [`GET /meetings/{id}/get_participants/`](#get-meetingsidget_participants)
+    - [`GET /meetings/{id}/get_participant_ids/`](#get-meetingsidget_participant_ids)
+  - [User API Endpoints](#user-api-endpoints)
+    - [`POST /register/`](#post-register)
+    - [`POST /login/`](#post-login)
+    - [`POST /logout/`](#post-logout)
+    - [`GET /user/`](#get-user)
+  - [SongApp API](#songapp-api)
+    - [`GET /songs/`](#get-songs)
+    - [`POST /songs/`](#post-songs)
+    - [`GET /songs/{id}/`](#get-songsid)
+    - [`PUT /songs/{id}/`](#put-songsid)
+    - [`DELETE /songs/{id}/`](#delete-songsid)
+    - [`GET /songs/{id}/get_playlists/`](#get-songsidget_playlists)
+    - [`POST /songs/{id}/add_to_playlist/`](#post-songsidadd_to_playlist)
+    - [`POST /songs/{id}/remove_from_playlist/`](#post-songsidremove_from_playlist)
+    - [`PUT /songs/{id}/update_artist/`](#put-songsidupdate_artist)
+    - [`PUT /songs/{id}/update_title/`](#put-songsidupdate_title)
+    - [`PUT /songs/{id}/update_url/`](#put-songsidupdate_url)
+    - [`GET /playlists/`](#get-playlists)
+    - [`POST /playlists/`](#post-playlists)
+    - [`GET /playlists/{id}/`](#get-playlistsid)
+    - [`PUT /playlists/{id}/`](#put-playlistsid)
+    - [`DELETE /playlists/{id}/`](#delete-playlistsid)
+    - [`GET /playlists/{id}/get_songs/`](#get-playlistsidget_songs)
+    - [`POST /playlists/{id}/add_songs/`](#post-playlistsidadd_songs)
+    - [`POST /playlists/{id}/remove_songs/`](#post-playlistsidremove_songs)
+    - [`PUT /playlists/{id}/update_title/`](#put-playlistsidupdate_title)
+- [API documentation - Frontend](#api-documentation---frontend)
+  - [Features](#features)
+- [License](#license)
+# API documentation - Backend
 The app is devided into 3 apps:
 1. `MeetApp` - API  for sending and receiving info about meetings
 2. `UserApp` - API for sending and receiving info about users
@@ -193,3 +196,17 @@ The app is devided into 3 apps:
 ### `PUT /playlists/{id}/update_title/`
 - Updates the title of a specific playlist.
 - Requires authentication and the user must be the creator of the playlist.
+
+# API documentation - Frontend
+
+## Features
+
+- User authentication
+- Event creation and management
+- Real-time updates and notifications
+- Integration with the MeetApp backend API
+
+
+# License
+
+This work is licensed under a [Creative Commons Attribution 4.0 International License](http://creativecommons.org/licenses/by/4.0/). You are free to share (copy and redistribute the material in any medium or format) and adapt (remix, transform, and build upon the material for any purpose, even commercially), under the following terms: Attribution — You must give appropriate credit, provide a link to the license, and indicate if changes were made.
