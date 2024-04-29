@@ -22,12 +22,11 @@ DEBUG = True
 ALLOWED_HOSTS = ['testserver', 'localhost']
 
 
-# Application definition
-
 INSTALLED_APPS = [
     "MeetApp",
     "SongApp",
     "UsersApp",
+    "RootApp",
     "rest_framework",
     "corsheaders",
     "rest_framework_simplejwt.token_blacklist",

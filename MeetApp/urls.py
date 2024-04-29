@@ -3,7 +3,7 @@ from MeetApp import views
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
-router.register(r"meetings", views.MeetingViewSet, basename="meeting")
+router.register(r"", views.MeetingViewSet, basename="meeting")
 
 app_name = "MeetApp"
 urlpatterns = [
