@@ -7,6 +7,7 @@ from rest_framework import status
 from .serializers import PlaylistSerializer, SongSerializer
 from SongApp.permissions import IsPlaylistCreator, IsSongOwner
 from rest_framework_simplejwt.authentication import JWTAuthentication
+from django.contrib.auth import get_user_model
 
 class SongViewSet(viewsets.ModelViewSet):
     queryset = Song.objects.all()
