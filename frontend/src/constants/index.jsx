@@ -1,3 +1,2 @@
-export const API_MEETAPP = 'http://localhost:8000/api/meetapp/';
-export const API_SONGAPP = 'http://localhost:8000/api/songapp/';
-export const API_USERSAPP = 'http://localhost:8000/api/usersapp/';
+export const API_USER_LOGIN = 'http://localhost:8000/user/login/';
+export const API_USER_LOGOUT = 'http://localhost:8000/user/logout/';

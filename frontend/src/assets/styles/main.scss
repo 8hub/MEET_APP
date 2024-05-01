@@ -1,0 +1,10 @@
+// Custom variables - overwriting Bootstrap `!default` variables
+@import 'utils/variables';
+
+// Booststrap default styles
+@import '~bootstrap/scss/bootstrap.scss';
+
+// Custom styles
+@import 'components/button';
+@import 'layouts/entry';
+@import 'fonts/fonts';

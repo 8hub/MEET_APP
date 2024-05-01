@@ -100,12 +100,24 @@ The app is devided into 3 apps:
 ### `POST /login/`
 - Logs in an existing user.
 - Request body should include `username` and `password`.
-- Returns a `refresh` and `access` token upon successful login.
+- Returns a `refresh`, `access` token and `user` upon successful login:
+```json
+  {
+    "refresh": "<refresh_token_hash>",
+    "access": "<access_token_hash>",
+    "user": {
+        "id": <int>,
+        "username": <string>,
+        "email": <string>
+    }
+}
+```
 - Response status: 200 OK if successful, 401 Unauthorized if credentials are invalid.
 
 ### `POST /logout/`
 - Logs out an authenticated user.
 - Request body should include the `refresh` token.
+- Blacklists the `refresh` token.
 - Response status: 205 Reset Content if successful, 400 Bad Request if an error occurred.
 
 ### `GET /user/`

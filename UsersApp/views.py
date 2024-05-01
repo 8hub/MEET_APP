@@ -3,6 +3,7 @@ from rest_framework import status, views
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.token_blacklist.models import BlacklistedToken, OutstandingToken
 
 from .serializers import UserSerializer
 
@@ -17,6 +18,7 @@ class RegisterView(views.APIView):
             return Response({
                 'refresh': str(refresh),
                 'access': str(refresh.access_token),
+                'user': UserSerializer(user).data
             }, status=status.HTTP_201_CREATED)
 
         errors = serializer.errors
@@ -42,6 +44,7 @@ class LoginView(views.APIView):
             return Response({
                 'refresh': str(refresh),
                 'access': str(refresh.access_token),
+                'user': UserSerializer(user).data
             })
         return Response({'error': 'Invalid Credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
@@ -51,11 +54,15 @@ class LogoutView(views.APIView):
     def post(self, request):
         try:
             refresh_token = request.data.get('refresh')
+            if refresh_token is None:
+                return Response({"error": "No refresh token provided"}, status=status.HTTP_400_BAD_REQUEST)
             token = RefreshToken(refresh_token)
+            if token.payload['user_id'] != request.user.id:
+                return Response({"error": "Invalid refresh token"}, status=status.HTTP_400_BAD_REQUEST)
             token.blacklist()
-            return Response(status=status.HTTP_205_RESET_CONTENT)
+            return Response(status=status.HTTP_204_NO_CONTENT)
         except Exception as e:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 class UserDetailView(views.APIView):
     permission_classes = [IsAuthenticated]

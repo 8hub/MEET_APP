@@ -1,0 +1,19 @@
+.btn-custom {
+  background-color: $SIGNATURE_BLUE;
+  color: white;
+  &:hover {
+    background-color: $SIGNATURE_BLUE_DARK;
+    color: white;
+  }
+}
+
+.btn-link-custom {
+  // Use interpolation #{} - constructing selectors dynamically
+  --bs-btn-hover-color: #{$SIGNATURE_BLUE_LIGHT};
+  --bs-btn-hover-bg: transparent;
+  --bs-btn-font-size: 1.1rem;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}
