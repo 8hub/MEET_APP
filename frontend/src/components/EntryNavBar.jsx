@@ -9,8 +9,8 @@ const EntryNavBar = () => {
   return (
     <>
       <div>
-        <AppButton buttonName='MeetApp' />
-        <AppButton buttonName='SongApp' />
+        <AppButton buttonName='MeetApp' navigateUrl={"/meetapp"}/>
+        <AppButton buttonName='SongApp' navigateUrl={"/musicapp"}/>
       </div>
       <div>
         {state.isAuthenticated ? <LogoutButton /> : <LoginModal/>}

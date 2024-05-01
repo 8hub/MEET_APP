@@ -73,7 +73,7 @@ class UserAccountTests(APITestCase):
         self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {self.refresh.access_token}')
         data = {'refresh': str(self.refresh)}
         response = self.client.post(url, data, format='json')
-        self.assertEqual(response.status_code, status.HTTP_205_RESET_CONTENT)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
     def test_user_detail(self):
         url = reverse('UsersApp:user_detail')
