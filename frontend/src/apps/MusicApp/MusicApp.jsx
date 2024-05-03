@@ -1,9 +1,15 @@
-import React from "react";
+import React, {useContext} from "react";
+import { AuthContext } from "../../auth";
+import TopBar from "../../components/TopBar";
+
 
 const MusicApp = () => {
+  const { state } = useContext(AuthContext);
+
   return (
-    <div>
-      <h1>MusicApp</h1>
+    <div className="musicapp-page">
+      <TopBar title="MusicApp" />
+      <span>{state.isAuthenticated ? "Logged in" : ""}</span>
     </div>
   );
 }

@@ -39,6 +39,7 @@
 - [API documentation - Frontend](#api-documentation---frontend)
   - [Features](#features)
 - [License](#license)
+
 # API documentation - Backend
 The app is devided into 3 apps:
 1. `MeetApp` - API  for sending and receiving info about meetings

@@ -10,7 +10,7 @@ const EntryNavBar = () => {
     <>
       <div>
         <AppButton buttonName='MeetApp' navigateUrl={"/meetapp"}/>
-        <AppButton buttonName='SongApp' navigateUrl={"/musicapp"}/>
+        <AppButton buttonName='MusicApp' navigateUrl={"/musicapp"}/>
       </div>
       <div>
         {state.isAuthenticated ? <LogoutButton /> : <LoginModal/>}

@@ -26,6 +26,7 @@ const LoginForm = ({handleClose}) => {
           placeholder='Username'
           value={username}
           onChange={(e) => setUsername(e.target.value)}
+          autoFocus
         />
       </Form.Group>
 
