@@ -175,7 +175,7 @@ The app is devided into 3 apps:
 ***`Playlist` model views***
 
 ### `GET /playlists/`
-- Lists all playlists.
+- Lists all playlists - JSON of [`GET /playlists/{id}/`](#get-playlistsid) responses.
 - No authentication or permissions required.
 
 ### `POST /playlists/`
@@ -185,6 +185,35 @@ The app is devided into 3 apps:
 ### `GET /playlists/{id}/`
 - Retrieves a specific playlist by its ID.
 - No authentication or permissions required.
+```json
+{
+    "id": <int>, // playlist ID
+    "songs": [
+        {
+            "id": <int>,
+            "added_by": <null> or {
+                "id": <int>,
+                "username": <string>,
+                "email": <string>
+            },
+            "title": <string>,
+            "artist": <string>,
+            "url_field": <string>, // URL with http:// or https:// prefix
+            "add_date": <string> // format is "YYYY-MM-DDTHH:MM:SS.ssssss+HH:MM"
+        }
+    ],
+    "created_by": { <null> or {
+        "id": <int>,
+        "username": <string>,
+        "email": <string>
+    },
+    "songs_count": <int>,
+    "title": <string>,
+    "anonymous": <bool>,
+    "add_date": <string>, // format is "YYYY-MM-DDTHH:MM:SS.ssssss+HH:MM"
+    "last_modified": <string> // format is "YYYY-MM-DDTHH:MM:SS.ssssss+HH:MM"
+}
+```
 
 ### `PUT /playlists/{id}/`
 - Updates a specific playlist.
