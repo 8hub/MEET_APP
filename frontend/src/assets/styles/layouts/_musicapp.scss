@@ -1,10 +1,99 @@
-.musicapp-page{
-  background-color: $BACKGROUND_COLOR;
+.musicapp-page {
+  background-color: #{ $BACKGROUND_COLOR };
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  // justify-content: center;
+  font-size: 1rem;
   color: white;
+}
+
+.playlist-wrapper{
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 70%;
+  padding: 1rem;
+
+}
+
+.playlist-table {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  table{
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 4px;
+    --bs-table-bg: #{$SIGNATURE_BLUE_DARK};
+    --bs-table-color: #{$SIGNATURE_WHITE};
+    --bs-table-hover-color: #{$SIGNATURE_WHITE};
+    background-color: transparent;
+
+    tr{
+      display: flex;
+      border-radius: 5px;
+      overflow: hidden;
+      border: solid 1px;
+      margin-bottom: 3px;
+      th{
+        border-style: none;
+        flex:1;
+      }
+      td{
+        display: flex;
+        align-items: center;
+        border-style: none;
+        overflow: hidden;
+        flex:1;
+      }
+      .center-text{
+        text-align: center;
+        justify-content: center;
+      }
+    }
+  }
+
+  .column-1 {
+      flex: 1;
+  }
+
+  .column-2 {
+      flex: 0 0 22%;
+  }
+
+  .column-3 {
+      flex: 0 0 25%;
+  }
+
+  .column-4 {
+      flex: 0 0 70px;
+  }
+
+}
+
+.collapse-song-list{
+  tr{
+    display: flex;
+    border-radius: 5px;
+    overflow: hidden;
+    border: solid 1px;
+    margin-left: 10px;
+    --bs-table-bg: #{$SIGNATURE_BLUE};
+    td{
+      display: flex;
+      align-items: center;
+      border-style: none;
+      overflow: hidden;
+      flex:1;
+    }
+    .center-text{
+      text-align: center;
+      justify-content: center;
+    }
+  }
 }

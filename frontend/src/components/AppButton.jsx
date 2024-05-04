@@ -11,7 +11,8 @@ const AppButton = ({ buttonName, navigateUrl }) => {
       <Button
         variant="outline-light"
         style={{margin: '5px'}}
-        className='btn btn-custom btn-lg'
+        className='btn-custom'
+        size="lg"
         onClick={navigateTo}
       >{buttonName}</Button>
   );
