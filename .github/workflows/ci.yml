@@ -2,9 +2,9 @@ name: Python application test
 
 on:
   push:
-    branches: [ rest_api_development ]
+    branches: [ master ]
   pull_request:
-    branches: [ rest_api_development ]
+    branches: [ master ]
 
 jobs:
   build:
