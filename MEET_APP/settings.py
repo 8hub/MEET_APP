@@ -58,7 +58,10 @@ ROOT_URLCONF = "MEET_APP.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "templates"],
+        "DIRS": [
+            BASE_DIR / "frontend/build",
+            BASE_DIR / "frontend/build/static"
+            ],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -69,6 +72,10 @@ TEMPLATES = [
             ],
         },
     },
+]
+
+STATICFILES_DIRS = [
+    BASE_DIR / "frontend/build/static",
 ]
 
 WSGI_APPLICATION = "MEET_APP.wsgi.application"
