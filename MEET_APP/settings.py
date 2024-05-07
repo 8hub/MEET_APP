@@ -6,16 +6,12 @@ A web app born to bring joy and light.
 """
 
 from pathlib import Path
-from decouple import Config, RepositoryEnv, config
+from decouple import config
 from datetime import timedelta
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = config('DJANGO_SECRET_KEY', default=None)
-if SECRET_KEY is None:
-    secret_config = Config(RepositoryEnv(BASE_DIR / "secret_config.env"))
-    SECRET_KEY = secret_config("DJANGO_SECRET_KEY")
-
 
 DEBUG = True
 
