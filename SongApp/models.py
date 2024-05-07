@@ -37,8 +37,12 @@ class Playlist(models.Model):
     
     def save(self, *args, **kwargs):
         if self.title:
-            if self.title in Playlist.objects.values_list('title', flat=True):
-                raise IntegrityError("Playlist with this title already exists.")
+            if not self.id:
+                if Playlist.objects.filter(title=self.title).exists():
+                    raise IntegrityError("Playlist with this title already exists.")
+            else:
+                if Playlist.objects.filter(title=self.title).exclude(id=self.id).exists():
+                    raise IntegrityError("Another playlist with this title already exists.")
             super().save(*args, **kwargs)
         else:
             raise ValueError("Playlist must have a title.")

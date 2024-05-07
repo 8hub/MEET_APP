@@ -1,7 +1,10 @@
+import { useState } from "react"
 import ButtonShowSongs from "./ButtonShowSongs"
 import Collapse from 'react-bootstrap/Collapse'
 
-const PlaylistRow = ({ playlist, open, setOpen }) => {
+const PlaylistRow = ({ playlist }) => {
+  const [open, setOpen] = useState(false);
+  
   return(
     <>
       <tr>
@@ -17,13 +20,13 @@ const PlaylistRow = ({ playlist, open, setOpen }) => {
           {playlist.songs.map(song => (
             <tr>
               <td>
-                song.title
+                {song.title}
               </td>
               <td>
-                song.artist
+                {song.artist}
               </td>
               <td>
-                song.url_field
+                {song.url_field}
               </td>
             </tr>
           ))}

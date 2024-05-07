@@ -1,84 +1,22 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Table from 'react-bootstrap/Table'
 import PlaylistRow from './PlaylistRow'
-
-//temp data - will be fetched from backend
-const playlists = [
-  {
-      "id": 1,
-      "songs": [
-          {
-              "id": 1,
-              "added_by": null,
-              "title": "Dynamite",
-              "artist": "Dynamo",
-              "url_field": "http://music.mc",
-              "add_date": "2024-04-27T11:22:30.608465+02:00"
-          },
-          {
-              "id": 2,
-              "added_by": {
-                  "id": 1,
-                  "username": "user",
-                  "email": "user@gmail.com"
-              },
-              "title": "Ancient vase",
-              "artist": "Vasco",
-              "url_field": "http://somevase.com",
-              "add_date": "2024-05-02T15:44:48.746404+02:00"
-          }
-      ],
-      "created_by": {
-          "id": 1,
-          "username": "user",
-          "email": "user@gmail.com"
-      },
-      "songs_count": 2,
-      "title": "Stomethisng",
-      "anonymous": false,
-      "add_date": "2024-05-02T15:45:16.740139+02:00",
-      "last_modified": "2024-05-02T15:45:16.740139+02:00"
-  },
-  {
-      "id": 2,
-      "songs": [
-          {
-              "id": 1,
-              "added_by": null,
-              "title": "Dynamite",
-              "artist": "Dynamo",
-              "url_field": "http://music.mc",
-              "add_date": "2024-04-27T11:22:30.608465+02:00"
-          },
-          {
-              "id": 2,
-              "added_by": {
-                  "id": 1,
-                  "username": "user",
-                  "email": "user@gmail.com"
-              },
-              "title": "Ancient vase",
-              "artist": "Vasco",
-              "url_field": "http://somevase.com",
-              "add_date": "2024-05-02T15:44:48.746404+02:00"
-          }
-      ],
-      "created_by": {
-          "id": 2,
-          "username": "user1",
-          "email": "example@mail.com"
-      },
-      "songs_count": 2,
-      "title": "All for one",
-      "anonymous": false,
-      "add_date": "2024-05-02T15:53:29.978900+02:00",
-      "last_modified": "2024-05-02T15:53:29.978900+02:00"
-  }
-]
+import axios from 'axios';
 
 const PlaylistList = () => {
-  const [open, setOpen] = useState(false);
-
+  // make axios call to get playlists with useEffect
+  const [playlists, setPlaylists] = useState([]);
+  useEffect(() => {
+    axios.get('http://localhost:8000/music/playlists/')
+      .then((response) => {
+        setPlaylists(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching data: ', error);
+      });
+  }
+  , []);
+  
   return (
     <div className="playlist-table">
       <Table bordered hover>
@@ -92,7 +30,7 @@ const PlaylistList = () => {
         </thead>
         <tbody>
           {playlists.map((playlist) => (
-            <PlaylistRow playlist={playlist} open={open} setOpen={setOpen}/>
+            <PlaylistRow playlist={playlist}/>
           ))}
         </tbody>
       </Table>
