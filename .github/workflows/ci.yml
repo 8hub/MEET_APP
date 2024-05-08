@@ -1,4 +1,4 @@
-name: Python application test
+name: Django API test
 
 on:
   push:
@@ -9,6 +9,16 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:12
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: test_db
+        ports:
+          - 5432:5432
 
     steps:
     - uses: actions/checkout@v2
@@ -24,6 +34,18 @@ jobs:
     - name: Set environment variables
       run: |
         echo "DJANGO_SECRET_KEY=${{ secrets.DJANGO_SECRET_KEY }}" >> $GITHUB_ENV
+        echo "SQL_DATABASE=test_db" >> $GITHUB_ENV
+        echo "SQL_USER=postgres" >> $GITHUB_ENV
+        echo "SQL_PASSWORD=postgres" >> $GITHUB_ENV
+        echo "SQL_HOST=localhost" >> $GITHUB_ENV
+        echo "SQL_PORT=5432" >> $GITHUB_ENV
+    - name: Wait for PostgreSQL to be ready
+      run: |
+        until PGPASSWORD=$SQL_PASSWORD psql -h "$SQL_HOST" -U "$SQL_USER" -d "$SQL_DATABASE" -c '\q'; do
+          >&2 echo "Postgres is still unavailable - sleeping"
+          sleep 1
+        done
+        >&2 echo "Postgres is up - executing command"
     - name: Run Database Migrations
       run: |
         python manage.py migrate
