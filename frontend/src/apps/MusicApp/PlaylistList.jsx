@@ -3,9 +3,8 @@ import Table from 'react-bootstrap/Table'
 import PlaylistRow from './PlaylistRow'
 import axios from 'axios';
 
-const PlaylistList = () => {
+const PlaylistList = ({playlists, setPlaylists}) => {
   // make axios call to get playlists with useEffect
-  const [playlists, setPlaylists] = useState([]);
   useEffect(() => {
     axios.get('http://localhost:8000/music/playlists/')
       .then((response) => {
@@ -25,7 +24,7 @@ const PlaylistList = () => {
             <th className='column-1'>Playlist Name</th>
             <th className='column-2'>Created By</th>
             <th className='column-3 center-text'>Created Date</th>
-            <th className='column-4 center-text'></th>
+            <th className='column-4 center-text' id='column-empty'></th>
           </tr>
         </thead>
         <tbody>

@@ -234,6 +234,23 @@ The app is devided into 3 apps:
 ### `GET /songs/`
 - Lists all songs.
 - No authentication or permissions required.
+```json
+[
+    {
+        "id": <int>,
+        "added_by": {
+            "id": <int>,
+            "username": <string>,
+            "email": <string>
+        },
+        "title": <string>,
+        "artist": <string>,
+        "url_field": <string>, // URL with http:// or https:// prefix
+        "add_date": <string> // format is "YYYY-MM-DDTHH:MM:SS.ssssss+HH:MM"
+    },
+    ...
+]
+```
 
 ### `POST /songs/`
 - Creates a new song.
@@ -306,7 +323,7 @@ The app is devided into 3 apps:
             "add_date": <string> // format is "YYYY-MM-DDTHH:MM:SS.ssssss+HH:MM"
         }
     ],
-    "created_by": { <null> or {
+    "created_by": <null> or {
         "id": <int>,
         "username": <string>,
         "email": <string>

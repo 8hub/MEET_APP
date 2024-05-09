@@ -24,6 +24,8 @@ class PlaylistSerializer(serializers.ModelSerializer):
 
   def create(self, validated_data):
     validated_data['created_by'] = self.context['request'].user
+    songs_ids = self.context['request'].data.get('songs_ids', [])
+    validated_data['songs'] = Song.objects.filter(id__in=songs_ids)
     return super().create(validated_data)
 
 class PlaylistSongSerializer(serializers.ModelSerializer):
