@@ -1,3 +1,13 @@
+- [Backend models](#backend-models)
+  - [MeetApp models](#meetapp-models)
+    - [`Meeting` model](#meeting-model)
+    - [`MeetingParticipant` model (intermediary model)](#meetingparticipant-model-intermediary-model)
+  - [UserApp models](#userapp-models)
+    - [`CustomUser` model](#customuser-model)
+  - [SongApp models](#songapp-models)
+    - [`Song` model](#song-model)
+    - [`Playlist` model](#playlist-model)
+    - [`PlaylistSong` model (intermediary model)](#playlistsong-model-intermediary-model)
 - [API documentation - Backend](#api-documentation---backend)
   - [MeetingViewSet API Endpoints](#meetingviewset-api-endpoints)
     - [`GET /meetings/`](#get-meetings)
@@ -39,6 +49,100 @@
 - [API documentation - Frontend](#api-documentation---frontend)
   - [Features](#features)
 - [License](#license)
+
+# Backend models
+
+## MeetApp models
+
+### `Meeting` model
+
+
+```python
+class Meeting(models.Model):
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="created_meetings")
+    name = models.CharField(max_length=64)
+    description = models.TextField(blank=True, null=True)
+    date = models.DateField()
+    time = models.TimeField()
+    location = models.CharField(max_length=64)
+    participants = models.ManyToManyField(settings.AUTH_USER_MODEL, through='MeetingParticipant', blank=True, related_name="meetings")
+    add_date = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    last_modified = models.DateTimeField(auto_now=True)
+```
+
+### `MeetingParticipant` model (intermediary model)
+
+```python
+class MeetingParticipant(models.Model):
+    '''
+    Additional model to crate a intermediary table
+    for the many-to-many relationship between
+    `Meeting` and `User` models
+    '''
+    participant = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    meeting = models.ForeignKey('Meeting', on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('participant', 'meeting')
+        verbose_name = "Meeting Participant"
+        verbose_name_plural = "Meeting Participants"
+```
+
+## UserApp models
+
+### `CustomUser` model
+```python
+class CustomUser(AbstractUser):
+    pass
+    # ALL BELOW ARE INHERITED FROM AbstractUser
+    username = models.CharField(max_length=150, unique=True)
+    first_name = models.CharField(max_length=150, blank=True)
+    last_name = models.CharField(max_length=150, blank=True)
+    email = models.EmailField(blank=True)
+    password = models.CharField(max_length=128)
+    groups = models.ManyToManyField(Group, related_name="user_set",   related_query_name="user")
+    user_permissions = models.ManyToManyField(Permission,   related_name="user_set", related_query_name="user")
+    is_staff = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
+    is_superuser = models.BooleanField(default=False)
+    last_login = models.DateTimeField(blank=True, null=True)
+    date_joined = models.DateTimeField(auto_now_add=True)
+```
+
+## SongApp models
+
+### `Song` model
+```python
+class Song(models.Model):
+    title = models.CharField(max_length=64)
+    artist = models.CharField(max_length=64, blank=True, null=True)
+    url_field = models.URLField(max_length=200, blank=True, null=True)
+    added_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name="songs")
+    add_date = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+```
+
+### `Playlist` model
+```python
+class Playlist(models.Model):
+    title = models.CharField(max_length=64, unique=True)
+    songs = models.ManyToManyField('Song', through='PlaylistSong', blank=True, related_name="parent_playlists")
+    anonymous = models.BooleanField(default=False)
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name="playlists")
+    add_date = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    last_modified = models.DateTimeField(auto_now=True)
+```
+
+### `PlaylistSong` model (intermediary model)
+```python
+class PlaylistSong(models.Model):
+    playlist = models.ForeignKey('Playlist', on_delete=models.CASCADE)
+    song = models.ForeignKey('Song', on_delete=models.CASCADE)
+    add_date = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['add_date']
+        unique_together = (('playlist', 'song'),)
+```
 
 # API documentation - Backend
 The app is devided into 3 apps:

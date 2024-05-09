@@ -59,7 +59,7 @@ class Meeting(models.Model):
 
 class MeetingParticipant(models.Model):
     '''
-    Additional model to crate a intermediate table
+    Additional model to crate a intermediary table
     for the many-to-many relationship between
     `Meeting` and `User` models
     '''
