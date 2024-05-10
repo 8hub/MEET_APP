@@ -36,11 +36,11 @@
 
     tr{
       display: flex;
-      border-radius: 5px;
       overflow: hidden;
-      border: solid 1px;
+      border: none;
       margin-bottom: 3px;
       th{
+        display: flex;
         border-style: none;
         flex:1;
       }
@@ -49,31 +49,65 @@
         align-items: center;
         border-style: none;
         overflow: hidden;
-        flex:1;
+        // flex:1;
       }
       .center-text{
         text-align: center;
-        justify-content: center;
+        justify-content: space-evenly;
       }
     }
   }
 
   .column-1 {
-      flex: 1;
+      flex: 1 0 0;
+      min-width: 9rem;
   }
 
   .column-2 {
-      flex: 0 0 22%;
+      flex: 1 0 0;
+      min-width: 8rem;
   }
 
   .column-3 {
-      flex: 0 0 25%;
+      flex: 0;
+      min-width: 8rem;
   }
 
   .column-4 {
-      flex: 0 0 70px;
+      flex: 0;
+      min-width: 12rem;
   }
 
+  .column-first {
+    border-top: solid 1px;
+    border-bottom: solid 1px;
+    border-left: solid 1px;
+    border-right: none;
+    border-radius: #{$TABLE_BORDER_RADIUS} 0 0 #{$TABLE_BORDER_RADIUS};
+  }
+
+  .column-mid {
+    border-top: solid 1px;
+    border-bottom: solid 1px;
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+  }
+
+  .column-last {
+    border-top: solid 1px;
+    border-bottom: solid 1px;
+    border-left: none;
+    border-right: solid 1px;
+    border-radius: 0 #{$TABLE_BORDER_RADIUS} #{$TABLE_BORDER_RADIUS} 0;
+  }
+
+  .column-blank {
+    display: block;
+    background-color: transparent;
+    border: none;
+    flex: 0 0 5rem;
+  }
 }
 
 .collapse-song-list{

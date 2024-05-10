@@ -17,3 +17,14 @@
     text-decoration: underline;
   }
 }
+
+.btn-show {
+  background-color: #{$BUTTON_SHOW};
+  color: white;
+  border: none;
+  &:hover {
+    background-color: #{$BUTTON_SHOW_HOVER};
+    color: white;
+    
+  }
+}
