@@ -25,6 +25,7 @@
     - [`POST /login/`](#post-login)
     - [`POST /logout/`](#post-logout)
     - [`GET /user/`](#get-user)
+    - [`POST /refresh-token/`](#post-refresh-token)
   - [SongApp API](#songapp-api)
     - [`GET /songs/`](#get-songs)
     - [`POST /songs/`](#post-songs)
@@ -228,6 +229,18 @@ The app is devided into 3 apps:
 ### `GET /user/`
 - Returns the details of the authenticated user.
 - Response status: 200 OK
+
+### `POST /refresh-token/`
+- The request body should include the refresh token.
+- Get a new access token using a refresh token.
+- Check if the refresh token is blacklisted.
+```python
+Response({
+      'refresh': str(new_refresh),
+      'access': str(new_refresh.access_token),
+      'user': UserSerializer(user).data
+      }, status=status.HTTP_200_OK)
+```
 
 ## SongApp API
 ***`Song` model views***
