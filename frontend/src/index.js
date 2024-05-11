@@ -6,13 +6,13 @@ import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <AuthProvider>
+  <AuthProvider>
+    <React.StrictMode>
 
         <App />
 
-    </AuthProvider>
-  </React.StrictMode>
+    </React.StrictMode>
+  </AuthProvider>
 );
 
 reportWebVitals();

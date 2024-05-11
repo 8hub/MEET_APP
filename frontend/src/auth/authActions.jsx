@@ -1,6 +1,9 @@
 import axios from 'axios';
-import { API_USER_LOGIN } from '../constants';
-import { API_USER_LOGOUT } from '../constants';
+import { 
+    API_USER_LOGIN,
+    API_USER_LOGOUT, 
+    API_USER_REFRESH 
+} from '../constants';
 
 export const login = async (dispatch, username, password) => {
     try {
@@ -43,12 +46,7 @@ export const logout = async (dispatch) => {
         axios.defaults.headers.common['Authorization'] = '';
 
         dispatch({
-            type: 'LOGOUT',
-            payload: {
-                accessToken: null,
-                refreshToken: null,
-                user: null,
-            },
+            type: 'LOGOUT'
         });
     }
   } catch (error) {
@@ -56,3 +54,49 @@ export const logout = async (dispatch) => {
       // handle logout error
   }
 };
+
+
+export const refreshAccessToken = async (dispatch) => {
+    try {
+        const refreshToken = localStorage.getItem('refreshToken');
+        if (!refreshToken) {
+            console.error('No refresh token found');
+            localStorage.removeItem('accessToken');
+            dispatch({
+                type: 'LOGOUT'
+            });
+            return;
+        }
+        const response = await axios.post(API_USER_REFRESH, { 
+            refresh: refreshToken
+        });
+
+        if (response.data.access) {
+            localStorage.setItem('accessToken', response.data.access);
+            axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.access}`;
+            dispatch({
+                type: 'REFRESH',
+                payload: {
+                    accessToken: response.data.access,
+                    refreshToken: refreshToken,
+                    user: response.data.user,
+                },
+            });
+            return;
+        }
+        if (response.data.error) {
+            console.error('Refresh failed:', response.data.error);
+            localStorage.removeItem('accessToken');
+            localStorage.removeItem('refreshToken');
+            dispatch({
+                type: 'LOGOUT'
+            });
+        }
+    } catch (error) {
+        console.error('Refresh failed:', error);
+        dispatch({
+            type: 'LOGOUT'
+        });
+        // handle refresh error
+    }
+}
