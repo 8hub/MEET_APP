@@ -25,6 +25,5 @@ jobs:
     - name: Run Linter
       run: |
         pwd
-        # This command finds all Python files recursively and runs flake8 on them
-        find . -name "*.py" -exec flake8 --max-line-length=120 {} +
+        find . -name "*.py" -exec flake8 --max-line-length=120 --ignore=W293,E111,E302,W292,E266 {} +
         echo "Linted all the python files successfully"

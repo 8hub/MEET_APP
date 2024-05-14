@@ -1,11 +1,11 @@
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
 import { AuthContext } from '../../auth';
+import DeletePlaylistButton from './DeletePlaylistButton';
 
 const ButtonDeletePlaylist = ({playlist, setPlaylists}) => {
-
     const { state } = useContext(AuthContext);
     const [show, setShow] = useState(false);
 
@@ -23,15 +23,16 @@ const ButtonDeletePlaylist = ({playlist, setPlaylists}) => {
                 handleClose();
             });
     }
+    
+    // disabled if the user is not logged in or if the user is not the creator of the playlist
+    const isDisabledDelete = state.isAuthenticated ? (JSON.stringify(state.user) !== JSON.stringify(playlist.created_by)) : true;
+    
     return (
         <>
-            <Button
-                variant='danger'
-                onClick={handleShow}
-                disabled={state.isAuthenticated ? (JSON.stringify(state.user) !== JSON.stringify(playlist.created_by)) : true}
-            >
-                Delete
-            </Button>
+            <DeletePlaylistButton
+                isDisabledDelete={isDisabledDelete}
+                handleShow={handleShow}
+            />
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>Delete Playlist</Modal.Title>

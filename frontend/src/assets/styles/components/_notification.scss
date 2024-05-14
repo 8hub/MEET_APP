@@ -1,0 +1,40 @@
+@keyframes slideDown {
+    from {
+        transform: translate(-50%, -100%);
+        opacity: 0;
+    }
+    to {
+        transform: translate(-50%, 0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translate(-50%, 0);
+        opacity: 1;
+    }
+    to {
+        transform: translate(-50%, -100%);
+        opacity: 0;
+    }
+}
+
+.notification {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    button:focus{
+        box-shadow: none;
+    }
+}
+
+.notification-enter {
+  animation: slideDown 0.5s forwards;
+}
+
+.notification-exit {
+  animation: slideUp 0.5s forwards;
+}
