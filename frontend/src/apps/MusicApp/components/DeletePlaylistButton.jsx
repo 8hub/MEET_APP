@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
-import { useNotification } from '../../notification/NotificationContext';
+import { useNotification } from '../../../notification/NotificationContext';
 
 const DeletePlaylistButton = ({ isDisabledDelete, handleShow }) => {
     const showNotification = useNotification();

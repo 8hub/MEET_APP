@@ -1,10 +1,11 @@
 import React, {useContext} from "react";
 import { AuthContext } from "../../auth";
 import TopBar from "../../components/TopBar";
-import PlaylistWrapper from "./PlaylistWrapper";
+import PlaylistWrapper from "./components/PlaylistWrapper";
 
 const MusicApp = () => {
-  const { state } = useContext(AuthContext);
+  const { state } = useCo
+  ntext(AuthContext);
 
   return (
     <div className="musicapp-page">

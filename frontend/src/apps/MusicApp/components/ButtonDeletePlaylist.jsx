@@ -2,7 +2,7 @@ import { useState, useContext } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
-import { AuthContext } from '../../auth';
+import { AuthContext } from '../../../auth';
 import DeletePlaylistButton from './DeletePlaylistButton';
 
 const ButtonDeletePlaylist = ({playlist, setPlaylists}) => {

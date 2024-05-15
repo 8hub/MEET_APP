@@ -1,7 +1,7 @@
 import React, {useContext} from "react";
 import { AuthContext } from "../../auth";
 import TopBar from "../../components/TopBar";
-import TestButton from "./TestButton";
+import TestButton from "./components/TestButton";
 
 const MeetApp = () => {
   const { state } = useContext(AuthContext);
