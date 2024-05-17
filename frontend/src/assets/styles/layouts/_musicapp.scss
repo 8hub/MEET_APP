@@ -4,7 +4,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  // justify-content: center;
   font-size: 1rem;
   color: white;
 }
@@ -49,11 +48,18 @@
         align-items: center;
         border-style: none;
         overflow: hidden;
-        // flex:1;
       }
       .center-text{
         text-align: center;
         justify-content: space-evenly;
+      }
+      .subtable-row{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        background-color: transparent;
+        box-shadow: none;
+        padding: 0;
       }
     }
   }
@@ -111,23 +117,84 @@
 }
 
 .collapse-song-list{
-  tr{
-    display: flex;
-    border-radius: 5px;
-    overflow: hidden;
-    border: solid 1px;
-    margin-left: 10px;
-    --bs-table-bg: #{$SIGNATURE_BLUE};
-    td{
+  position: relative;
+}
+
+
+// Define a mixin for column percentages
+@mixin column-percentage($percentage) {
+  width: $percentage;
+}
+
+
+.playlist-row {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  .song-subtable {
+    border-collapse: collapse;
+    margin:0;
+
+    tr{
+      overflow: visible;
+      position: relative;
       display: flex;
-      align-items: center;
-      border-style: none;
-      overflow: hidden;
-      flex:1;
+      border-radius: 5px;
+      border: solid 1px transparent;
+      margin-left: 15px;
+      --bs-table-bg: #{$SIGNATURE_BLUE};
+      td{
+        
+        display: flex;
+        align-items: center;
+        border-style: none;
+        overflow: hidden;
+        flex:1;
+      }
+      .center-text{
+        text-align: center;
+        justify-content: center;
+      }
+      
+      &::before {
+        content: '';
+        position: absolute;
+        left: -8px;
+        top: -5px;
+        bottom: 0;
+        width: 2px;
+        background-color: $SIGNATURE_WHITE;
+      }
+      &::after {
+        content: '';
+        position: absolute;
+        left: -8px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 8px;
+        height: 2px;
+        background-color: $SIGNATURE_WHITE; // Adjust color as necessary
+      }
+      // Only draw the line from the middle for the last
+      &:last-child::before {
+        bottom: 50%;
+      }
     }
-    .center-text{
-      text-align: center;
-      justify-content: center;
+
+    // Apply column width percentages
+    .column-song-title {
+      @include column-percentage(50%);
+      border-radius: #{$TABLE_BORDER_RADIUS} 0 0 #{$TABLE_BORDER_RADIUS};
+    }
+
+    .column-song-artist {
+      @include column-percentage(30%);
+    }
+
+    .column-song-url {
+      @include column-percentage(20%);
+      border-radius: 0 #{$TABLE_BORDER_RADIUS} #{$TABLE_BORDER_RADIUS} 0;
     }
   }
 }

@@ -5,7 +5,7 @@ import axios from 'axios';
 import { AuthContext } from '../../../auth';
 import DeletePlaylistButton from './DeletePlaylistButton';
 
-const ButtonDeletePlaylist = ({playlist, setPlaylists}) => {
+const ModalDeletePlaylist = ({playlist, setPlaylists}) => {
     const { state } = useContext(AuthContext);
     const [show, setShow] = useState(false);
 
@@ -53,4 +53,4 @@ const ButtonDeletePlaylist = ({playlist, setPlaylists}) => {
     );
 }
 
-export default ButtonDeletePlaylist;
+export default ModalDeletePlaylist;

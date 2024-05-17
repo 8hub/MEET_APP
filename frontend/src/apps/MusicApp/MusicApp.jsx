@@ -4,8 +4,7 @@ import TopBar from "../../components/TopBar";
 import PlaylistWrapper from "./components/PlaylistWrapper";
 
 const MusicApp = () => {
-  const { state } = useCo
-  ntext(AuthContext);
+  const { state } = useContext(AuthContext);
 
   return (
     <div className="musicapp-page">

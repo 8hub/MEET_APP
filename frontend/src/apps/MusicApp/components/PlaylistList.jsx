@@ -29,7 +29,7 @@ const PlaylistList = ({playlists, setPlaylists}) => {
         </thead>
         <tbody>
           {playlists.map((playlist) => (
-            <PlaylistRow playlist={playlist} setPlaylists={setPlaylists}/>
+            <PlaylistRow key={playlist.id} playlist={playlist} setPlaylists={setPlaylists}/>
           ))}
         </tbody>
       </Table>
