@@ -14,7 +14,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 70%;
+  width: 90%;
   padding: 1rem;
 
 }
@@ -134,8 +134,7 @@
 
   .song-subtable {
     border-collapse: collapse;
-    margin:0;
-
+    margin: 5px 0 0 0;
     tr{
       overflow: visible;
       position: relative;
@@ -145,12 +144,12 @@
       margin-left: 15px;
       --bs-table-bg: #{$SIGNATURE_BLUE};
       td{
-        
+        box-sizing: border-box;
         display: flex;
-        align-items: center;
+        flex-direction: column;
+        align-items: flex-start;
         border-style: none;
         overflow: hidden;
-        flex:1;
       }
       .center-text{
         text-align: center;
@@ -161,7 +160,7 @@
         content: '';
         position: absolute;
         left: -8px;
-        top: -5px;
+        top: -6px;
         bottom: 0;
         width: 2px;
         background-color: $SIGNATURE_WHITE;
@@ -184,17 +183,37 @@
 
     // Apply column width percentages
     .column-song-title {
-      @include column-percentage(50%);
+      flex: 5 1 0;
       border-radius: #{$TABLE_BORDER_RADIUS} 0 0 #{$TABLE_BORDER_RADIUS};
     }
 
     .column-song-artist {
-      @include column-percentage(30%);
+      flex: 4 1 0;
     }
 
     .column-song-url {
-      @include column-percentage(20%);
+      flex: 3 1 0;
       border-radius: 0 #{$TABLE_BORDER_RADIUS} #{$TABLE_BORDER_RADIUS} 0;
     }
+  }
+}
+
+ /* Width for screens wider than 800px */
+@media (min-width: 800px) {
+  .playlist-wrapper {
+    width: 80%;
+  }
+}
+
+/* Width for screens wider than 1000px */
+@media (min-width: 1024px) {
+  .playlist-wrapper {
+    width: 70%; 
+  }
+}
+
+@media (min-width: 1440px) {
+  .playlist-wrapper {
+    width: 60%; 
   }
 }
