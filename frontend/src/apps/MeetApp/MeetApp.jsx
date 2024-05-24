@@ -2,6 +2,7 @@ import React, {useContext} from "react";
 import { AuthContext } from "../../auth";
 import TopBar from "../../components/TopBar";
 import TestButton from "./components/TestButton";
+import Calendar from "./components/Calendar";
 
 const MeetApp = () => {
   const { state } = useContext(AuthContext);
@@ -14,6 +15,7 @@ const MeetApp = () => {
       <TestButton message="This is a success notification" variant="success" />
       <TestButton message="This is a warning notification" variant="warning" />
       <TestButton message="This is an error notification" variant="danger" />
+      <Calendar></Calendar>
     </div>
   );
 }
