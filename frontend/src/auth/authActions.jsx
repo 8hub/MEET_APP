@@ -2,7 +2,8 @@ import axios from 'axios';
 import { 
     API_USER_LOGIN,
     API_USER_LOGOUT, 
-    API_USER_REFRESH 
+    API_USER_REFRESH,
+    API_USER_REGISTER,
 } from '../constants';
 
 export const login = async (dispatch, username, password) => {
@@ -98,5 +99,29 @@ export const refreshAccessToken = async (dispatch) => {
             type: 'LOGOUT'
         });
         // handle refresh error
+    }
+}
+
+export const register = async (dispatch, username, email, password) => {
+    try {
+        const response = await axios.post(API_USER_REGISTER, { username, email, password });
+        if (response.data.access && response.data.refresh && response.data.user) {
+            // store tokens in local storage
+            localStorage.setItem('accessToken', response.data.access);
+            localStorage.setItem('refreshToken', response.data.refresh);
+            // set the axios auth header
+            axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.access}`;
+            dispatch({
+                type: 'LOGIN',
+                payload: {
+                    accessToken: response.data.access,
+                    refreshToken: response.data.refresh,
+                    user: response.data.user,
+                },
+            });
+        }
+    } catch (error) {
+        console.error('Register failed:', error);
+        // handle register error
     }
 }

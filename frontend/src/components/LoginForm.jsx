@@ -19,7 +19,7 @@ const LoginForm = ({handleClose}) => {
   
   return (
     <Form onSubmit={handleLogin}>
-      <Form.Group controlId='formBasicUsername'>
+      <Form.Group className='mb-3' controlId='formBasicUsername'>
         <Form.Label>Username</Form.Label>
         <Form.Control
           type='text'
@@ -27,16 +27,18 @@ const LoginForm = ({handleClose}) => {
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           autoFocus
+          required
         />
       </Form.Group>
 
-      <Form.Group controlId='formBasicPassword'>
+      <Form.Group className='mb-3' controlId='formBasicPassword'>
         <Form.Label>Password</Form.Label>
         <Form.Control
           type='password'
           placeholder='Password'
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          required
         />
       </Form.Group>
 
